@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Peter Ralph">
+  <title>Forwards and backwards in spatially heterogeneous populations</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="./reveal.js/dist/theme/simple.css" id="theme">
+  <style type="text/css">
+
+  .reveal { font-size: 20px; }
+
+  .reveal h1 { font-size: 1.5em; } 
+
+  .reveal h2 { font-size: 1.2em; } 
+
+  .reveal .slides { text-align: left; }
+
+  .reveal .slides figure { text-align: center; }
+
+  .centered p { text-align: center; }
+
+  /* apply this to the columns div */
+  div.vcentered { display: flex; align-items: center; }
+
+  .caption p { font-size: 75%; }
+
+  .greyed { color: #4444; }
+
+  div.floatright { float: right; text-align: right; }
+
+  .reveal figcaption { display: none; }
+
+  .reveal img { border: none; }
+
+  .reveal section img { border: none; }
+
+  .MathJax_Display { margin: 0; }
+
+  img.finger { vertical-align: text-top; }
+
+  .smaller { font-size: 50%; }
+  .smallish { font-size: 80%; }
+
+  .hide { opacity: 0; }
+
+  .red { color: red; }
+  .blue { color: blue; }
+
+  .coverup { background: white; }
+
+  </style>
+
+  <div style="display: none">
+  \[
+  \usepackage{amsmath}
+  \usepackage{amssymb}
+  \usepackage{xcolor}
+
+  \newcommand{\R}{\mathbb{R}}
+  \newcommand{\Q}{\mathbb{Q}}
+  \newcommand{\Z}{\mathbb{Z}}
+  \newcommand{\N}{\mathbb{N}}
+  \newcommand{\C}{\mathbb{C}}
+
+  \renewcommand{\P}{\mathbb{P}}
+  \newcommand{\E}{\mathbb{E}}
+
+  \newcommand{\var}{\mathop{\mbox{Var}}}
+  \newcommand{\cov}{\mathop{\mbox{cov}}}
+  \newcommand{\median}{\mathop{\mbox{median}}}
+  %\newcommand{\det}{\mathop{\mbox{det}}}
+  \newcommand{\supp}{\mathop{\mbox{supp}}}
+  \newcommand{\sgn}{\mathop{\mbox{sgn}}}
+
+  \newcommand{\conv}{\mathop{\mbox{conv}}}
+  \newcommand{\deq}{\stackrel{\scriptscriptstyle{d}}{=}}
+  \newcommand{\dcv}{\stackrel{\scriptscriptstyle{d}}{\longrightarrow}}
+
+  \]
+  </div>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Forwards and backwards in spatially heterogeneous
+populations</h1>
+  <p class="author">Peter Ralph</p>
+  <p class="date">Probability Seminar <br/> UC Berkeley // 9 October
+2024</p>
+</section>
+
+<section>
+<section id="outline" class="title-slide slide level1">
+<h1>Outline</h1>
+<!--
+title-slide-attributes:
+    data-background-image: /path/to/title_image.png
+    data-background-size: contain
+-->
+<div class="columns">
+<div class="column">
+<p><strong>Joint work with:</strong></p>
+<ul>
+<li>Alison Etheridge (Oxford)</li>
+<li>Tom Kurtz (Madison)</li>
+<li>Ian Letter (ex-Oxford)</li>
+<li>Terence Tsui (Warwick)</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="figs/coauthors.png" /></p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<p><a href="https://dx.doi.org/10.1214/24-EJP1075"><img
+data-src="figs/paper_header.png"
+alt="Looking forwards and backwards: Dynamics and genealogies of locally regulated populations" /></a></p>
+<p><em>slides:</em> <a
+href="https://petrelharp.github.io/berkeley-oct-2024/berkeley-oct-2024.slides.html">github.com/petrelharp/berkeley-oct-2024</a></p>
+</section>
+<section class="slide level2">
+
+<blockquote>
+<p>UO is located on the traditional indigenous homeland of the Kalapuya
+people. Kalapuya people were dispossessed of their indigenous homeland
+by the United States government and forcibly removed. Today, Kalapuya
+descendants are primarily citizens of the Confederated Tribes of Grand
+Ronde and the Confederated Tribes of Siletz Indians, and continue to
+make important contributions to their communities, to the UO, to Oregon,
+and to the world.</p>
+</blockquote>
+</section></section>
+<section>
+<section id="motivation" class="title-slide slide level1">
+<h1>Motivation</h1>
+
+</section>
+<section id="motivating-question" class="slide level2">
+<h2>Motivating question</h2>
+<blockquote>
+<p>What can we deduce about the history of a population from patterns of
+genetic variation that we observe today?</p>
+</blockquote>
+<ul>
+<li>genetic differences produced by mutations</li>
+<li>which accumulate slowly since common anestors</li>
+</ul>
+<blockquote>
+<p>What can we deduce about the history of a population from the
+genealogies that we observe today?</p>
+</blockquote>
+<p>… which are now <em>inferrable</em>.</p>
+</section>
+<section id="the-world-is-not-flat-homogeneous" class="slide level2"
+data-background-image="figs/east_bay.jpg"
+data-background-position="center">
+<h2 data-background-image="figs/east_bay.jpg"
+data-background-position="center">The world is not <s>flat</s>
+homogeneous</h2>
+<div class="r-stretch">
+
+</div>
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>How we usually model it:</p>
+<p><img data-src="figs/lawn.png" /></p>
+<p><em>“Over large spatial and temporal scales local details should wash
+out”</em></p>
+</div><div class="column" style="width:50%;">
+<div class="fragment">
+<p><em>… but will they?</em></p>
+<figure>
+<img data-src="figs/flower.png" alt="Drummond’s anemone" />
+<figcaption aria-hidden="true">Drummond’s anemone</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="a-model" class="title-slide slide level1">
+<h1>A model</h1>
+
+</section>
+<section id="a-model-based-on-interacting-branching-processes"
+class="slide level2">
+<h2>A model, based on “interacting branching processes”</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><span class="math display">\[\eta(x) = \text{population at (or close
+to) } x\]</span></p>
+<div>
+<ul>
+<li class="fragment">A juvenile is born <span
+class="fragment blue"><em>per capita rate <span
+class="math inline">\(\gamma(x, \eta(x))\)</span></em></span></li>
+<li class="fragment">Dispersal <span
+class="blue fragment"><em>distribution <span class="math inline">\(q(x,
+dy)\)</span> (Gaussian)</em></span></li>
+<li class="fragment">Establishment <span
+class="blue fragment"><em>probability <span class="math inline">\(r(y,
+\eta(y))\)</span></em></span></li>
+<li class="fragment">Death of mature individuals <span
+class="blue fragment"><em>rate <span class="math inline">\(\mu(x,
+\eta(x))\)</span></em></span></li>
+</ul>
+</div>
+<div class="fragment">
+<p>Can choose parameters to achieve stability.</p>
+</div>
+</div><div class="column" style="width:40%;">
+<div class="r-stack">
+<div class="fragment">
+<figure>
+<img data-src="figs/dispersal.png"
+alt="A kid about to blow seeds off a flower head" />
+<figcaption aria-hidden="true">A kid about to blow seeds off a flower
+head</figcaption>
+</figure>
+</div>
+<div class="fragment">
+<figure>
+<img data-src="figs/established_plant.jpg"
+alt="A newly established plant" />
+<figcaption aria-hidden="true">A newly established plant</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment highlight-green">
+<p><em>We only track mature individuals.</em></p>
+</div>
+</section></section>
+<section>
+<section id="a-note-of-caution" class="title-slide slide level1">
+<h1>A note of caution</h1>
+<div class="floatright">
+<figure>
+<img data-src="figs/gilia.jpeg" style="width:40.0%"
+alt="Gilia Patterson" />
+<figcaption aria-hidden="true">Gilia Patterson</figcaption>
+</figure>
+<div class="caption">
+<p><em>Gilia Patterson</em></p>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><p>death: <span class="math inline">\(\mu = 0.3\)</span> per
+generation</p></li>
+<li><p>establishment: <span class="math inline">\(r =
+0.7\)</span></p></li>
+<li><p>dispersal: Gaussian with SD <span
+class="math inline">\(\sigma\)</span></p></li>
+<li><p>local density: in circle of radius <span
+class="math inline">\(\epsilon\)</span></p></li>
+<li><p>reproduction: with <span class="math inline">\(K=2\)</span>,
+<span class="math inline">\(\lambda=3\)</span>, <span
+class="math display">\[ \gamma = \frac{\lambda}{1 + \text{(local
+density)}/K} \]</span></p></li>
+<li><p>non-spatial equilibrium density: <span class="math display">\[ K
+\left( \frac{\lambda}{1 - r} - 1 \right) .\]</span></p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<figure>
+<img data-src="figs/slim_screenshot.png" alt="screenshot of SLiM GUI" />
+<figcaption aria-hidden="true">screenshot of SLiM GUI</figcaption>
+</figure>
+<div class="caption">
+<p><em>SLiM code at <a
+href="https://github.com/petrelharp/berkeley-oct-2024/raw/main/gilia_clumping_sim.slim">github.com/petrelharp/berkeley-oct-2024</a></em></p>
+</div>
+</div>
+</div>
+</section>
+<section id="large-dispersal-distance" class="slide level2">
+<h2>Large dispersal distance</h2>
+<ul>
+<li>dispersal distance <span class="math inline">\(\sigma =
+3\)</span></li>
+<li>interaction distance <span class="math inline">\(\epsilon =
+1\)</span></li>
+<li>mean # offspring <span class="math inline">\(\propto (1 +
+\text{(density)} / K)^{-1}\)</span></li>
+</ul>
+<div class="fragment">
+<figure>
+<img data-src="figs/gilia_high_sigma.png" alt="not patchy" />
+<figcaption aria-hidden="true">not patchy</figcaption>
+</figure>
+</div>
+</section>
+<section id="small-dispersal-distance" class="slide level2">
+<h2>Small dispersal distance</h2>
+<ul>
+<li>dispersal distance <span class="math inline">\(\sigma =
+0.2\)</span></li>
+<li>interaction distance <span class="math inline">\(\epsilon =
+1\)</span></li>
+<li>mean # offspring <span class="math inline">\(\propto (1 +
+\text{(density)} / K)^{-1}\)</span></li>
+</ul>
+<figure>
+<img data-src="figs/gilia_low_sigma.png" alt="not patchy" />
+<figcaption aria-hidden="true">not patchy</figcaption>
+</figure>
+<div class="fragment">
+<p>Low dispersal distance copamred to distance over which negatively
+influenced by presence of neighbors can lead to strong clumping - <span
+class="fragment">true even in deterministic model!</span></p>
+</div>
+</section></section>
+<section>
+<section id="characterising-the-model" class="title-slide slide level1">
+<h1>Characterising the model</h1>
+
+</section>
+<section id="local-density" class="slide level2">
+<h2>Local density</h2>
+<p>Birth-death process with dynamics:</p>
+<ul>
+<li>A juvenile is born <span class="fragment blue"><em>per capita rate
+<span class="math inline">\(\gamma(x, \eta(x))\)</span></em></span></li>
+<li>Dispersal <span class="blue fragment"><em>distribution <span
+class="math inline">\(q(x, dy)\)</span> (Gaussian)</em></span></li>
+<li>Establishment <span class="blue fragment"><em>probability <span
+class="math inline">\(r(y, \eta(y))\)</span></em></span></li>
+<li>Death of mature individuals <span class="blue fragment"><em>rate
+<span class="math inline">\(\mu(x, \eta(x))\)</span></em></span></li>
+</ul>
+<div class="fragment">
+<div class="red">
+<p>Think of population as a point measure, with atoms of mass <span
+class="math inline">\(1/N\)</span>, and write <span
+class="math display">\[ \langle f, \eta \rangle = \frac{1}{N} \sum
+f(X_i) = \int f(x) \eta(dx) . \]</span></p>
+</div>
+</div>
+<div class="fragment">
+<div class="blue">
+<p>Rates depend on <em>local density near <span
+class="math inline">\(x\)</span></em>: <span class="math display">\[
+\gamma(x, \eta(x)) := \gamma(x, \rho_\gamma * \eta(x));
+\qquad \rho_\gamma * \eta(x) = \int \rho_\gamma(x-y) \eta(dy)
+.\]</span></p>
+</div>
+</div>
+<div class="fragment">
+<p>There are <em>three</em> interaction kernels, <span
+class="math inline">\(\rho_r\)</span>, <span
+class="math inline">\(\rho_\gamma\)</span>, and <span
+class="math inline">\(\rho_\mu\)</span>, which need not be the same.</p>
+</div>
+</section>
+<section id="scaling-the-model-parameters-n-theta" class="slide level2">
+<h2>Scaling the model – <span class="red">parameters <span
+class="math inline">\(N\)</span>, <span
+class="math inline">\(\theta\)</span></span></h2>
+<p>Birth-death process with dynamics:</p>
+<ul>
+<li>A juvenile is born per capita rate <span
+class="math inline">\({\color{red}\theta}\gamma(x,
+\eta(x))\)</span></li>
+<li>Dispersal distribution <span
+class="math inline">\(q_{\color{red}\theta}(x, dy)\)</span> (Gaussian
+<span class="red">mean and variance order <span
+class="math inline">\(1/\theta\)</span></span>)</li>
+<li>(Instantaneous) establishment probability <span
+class="math inline">\(r(y, \eta(y))\)</span></li>
+<li>Death of mature individuals rate <span
+class="math inline">\(\mu_{\color{red}\theta}(x, \eta(x))\)</span></li>
+</ul>
+<div class="fragment">
+<p>Assume: <span class="math display">\[\int \theta\left( r(z, \eta)
+f(z) - r(x,\eta)f(x) \right) q_\theta(x, dz)
+\stackrel{\theta\to\infty}{\longrightarrow} \Delta\left(r(\cdot, \eta)
+f(\cdot)\right)(x) \]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[ \theta\left( r(z, \eta) \gamma(x, \eta)
+- \mu_\theta(x, \eta)\right) = F(x,\eta)\]</span></p>
+</div>
+<div class="fragment">
+<div class="tiny">
+<p>(Roughly, <span class="math inline">\(r\)</span> sufficiently smooth
+and net per capita growth rate <span class="math inline">\(\propto
+1/\theta\)</span>.)</p>
+</div>
+</div>
+<div class="fragment">
+<p>(See paper for more general case: an operator instead of <span
+class="math inline">\(\Delta\)</span>.)</p>
+</div>
+</section>
+<section
+id="how-do-things-change-locally-langle-f-eta-rangle-frac1n-fx_i-int-fx-etadx"
+class="slide level2">
+<h2>How do things change, locally? <span class="smallish"><span
+class="math inline">\(\langle f, \eta \rangle = \frac{1}{N} f(X_i) =
+\int f(x) \eta(dx)\)</span></span></h2>
+<ul>
+<li><p>Individual at <span class="math inline">\(x\)</span> gives birth
+to a single mature offspring at <span class="math inline">\(z\)</span>
+at rate <span class="math display">\[ \theta \gamma(x, \eta) r(z, \eta)
+q_\theta(x,dz) \qquad \text{increment} \langle f,\eta \rangle \text{by}
+\frac{1}{N} f(z) .\]</span></p></li>
+<li><p>Individual at <span class="math inline">\(x\)</span> dies at rate
+<span class="math inline">\(\theta\mu_\theta(x,\eta)\)</span> increment
+<span class="math inline">\(\langle f,\eta \rangle\)</span> by <span
+class="math inline">\(-\frac{1}{N} f(x)\)</span></p></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[\begin{aligned}
+\frac{d}{dt}\mathbb{E}\left[\langle f, \eta_t\rangle \big| \eta_0 =
+\eta\right] \big|_{t=0}
+\end{aligned}\]</span></p>
+<div class="r-stack">
+<div class="fragment coverup">
+<p><span class="math display">\[\begin{aligned}
+&amp;\qquad = \theta \int \int \color{red}{\frac{1}{N}} f(z) r(z, \eta)
+q_\theta(x, dz) \gamma(x, \eta) \color{red}{N} \eta(dx)
+\\ &amp;\qquad \qquad \qquad
+- \theta \int \color{red}{\frac{1}{N}} f(x) \mu_\theta(x, \eta)
+\color{red}{N} \eta(dx) .
+\end{aligned}\]</span></p>
+</div>
+<div class="fragment coverup">
+<p><span class="math display">\[\begin{aligned}
+&amp; = \theta \int \int f(z) r(z, \eta) q_\theta(x, dz)\gamma(x, \eta)
+\eta(dx)
+- \theta \int f(x) \mu_\theta(x, \eta)\eta(dx) \\
+&amp;\vphantom{\int}
+\end{aligned}\]</span></p>
+</div>
+<div class="fragment coverup">
+<p><span class="math display">\[\begin{aligned}
+&amp;= \int \left( \int \theta(f(z) r(z, \eta) - f(x) r(x, \eta))
+q_\theta(x,dz)\right) \gamma(x, \eta) \eta(dx) \\
+&amp;\qquad \qquad {}+ \int \int f(x) \theta \left(r(x,\eta)\gamma(x,
+\eta) - \mu_\theta(x,\eta)\right) \eta(dx) .
+\hspace{5em}
+\end{aligned}\]</span></p>
+<div class="floatright">
+<p><span class="red">using <span class="math inline">\(\int
+q_\theta(x,dz) = 1\)</span><span></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+\stackrel{\theta \to \infty}{\longrightarrow}
+\int \gamma(x,\eta) \Delta(f(\cdot)r(\cdot,\eta))(x) \eta(dx)
++ \int f(x) F(x,\eta) \eta(dx)
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="quadratic-variation" class="slide level2">
+<h2>Quadratic variation</h2>
+<ul>
+<li><p>Individual at <span class="math inline">\(x\)</span> gives birth
+to single mature offspring at <span class="math inline">\(z\)</span> at
+rate <span class="blue"><span class="math inline">\(\theta
+\gamma(x,\eta)r(z,\eta)q_\theta(x,dz)\)</span>:</span> <span
+class="red">increment <span class="math inline">\(\langle f, \eta
+\rangle = \frac{1}{N} f(z)\)</span></span></p></li>
+<li><p>Individual at <span class="math inline">\(x\)</span> dies at rate
+<span class="blue"><span class="math inline">\(\theta
+\mu_\theta(x,\eta)\)</span>:</span> <span class="red">increment <span
+class="math inline">\(\langle f, \eta \rangle = -\frac{1}{N}
+f(x)\)</span></span></p></li>
+</ul>
+<p><span class="math display">\[\begin{aligned}
+&amp;N \theta \big\{ \big\langle \int \frac{1}{N^2} f^2(z) r(z,\eta)
+q_\theta(x,dz), \eta(dx) \big\rangle
+\\&amp;\qquad \qquad {} +
+\big\langle \frac{1}{N^2} f^2(z) \mu_\theta(x,\eta), \eta(dx)
+\big\rangle \big\}
+\\&amp;= \frac{\theta}{N} \big\langle
+\gamma(x,\eta) \int f^2(z) r(z,\eta) q_\theta(x,dz) + f^2(x)
+\mu_\theta(x,\eta), \eta(dx)
+\big\rangle
+\end{aligned}\]</span></p>
+<div class="fragment red">
+<p><span class="math display">\[
+\int f^2(z) r(z,\eta) q_\theta(x,dz) \to f^2(x) r(x,\eta),
+\qquad
+\mu_\theta = r\gamma - \frac{1}{\theta}F \to r \gamma
+\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="blue"><span
+class="math inline">\(\stackrel{\theta\to\infty}{\longrightarrow} \alpha
+\langle 2 r(x,\eta) \gamma(x,\eta) f^2(x), \eta(dx)
+\rangle\)</span></span> where <span class="red"><span
+class="math inline">\(\alpha := \lim
+\frac{\theta}{N}\)</span></span>.</p>
+</div>
+</section>
+<section id="small-large-alpha" class="slide level2">
+<h2>small / large <span class="math inline">\(\alpha\)</span>:</h2>
+<p><img data-src="figs/fig1a.png" style="width:45.0%"
+alt="Snapshot of a simulation showing smooth distribution of indivdiuals" />
+<img data-src="figs/fig1b.png" style="width:45.0%"
+alt="Snapshot of a simulation showing patchy distribution of indivdiuals" /></p>
+</section>
+<section id="martingale-characterization-of-limit" class="slide level2">
+<h2>Martingale characterization of limit</h2>
+<p><span class="math display">\[\begin{aligned}
+&amp; \langle f(x), \eta_t(dx)\rangle - \langle f(x), \eta_0(dx)\rangle
+\\&amp;\qquad {}
+- \int_0^t \big\langle
+\gamma(x,\eta_s)\Delta\left(f(\cdot)r(\cdot,\eta_s)\right)(x) +
+F(x,\eta_s)f(x),
+    \eta_s(dx) \big\rangle ds
+\end{aligned}\]</span> is a martingale, <span
+class="math inline">\(M_f(\cdot)\)</span>, with <span
+class="math display">\[ \langle M_f \rangle_t = \alpha \int_0^t \big
+\langle 2 r(x,\eta_s)\gamma(x,\eta_s) f^2(x), \eta_s(x) \big \rangle ds
+. \]</span></p>
+<div>
+<ul>
+<li class="fragment"><span class="math inline">\(\alpha=0\)</span>:
+non-local PDE</li>
+<li class="fragment">can also recover ‘local’ PDEs <span
+class="math display">\[\partial_t \eta = r \Delta(\gamma \eta) +
+F\eta\]</span></li>
+<li class="fragment"><span class="math inline">\(\alpha &gt; 0\)</span>:
+nonlinear superprocess</li>
+</ul>
+</div>
+<div class="fragment">
+<p>e.g., <span class="math inline">\(\gamma\equiv1\)</span>, <span
+class="math inline">\(r\equiv1\)</span>, <span
+class="math inline">\(F=1-h*\eta\)</span>, (diffusion limit of)
+Bolker-Pacala model: spatial branching process; reproductive success
+decreases in crowded regions.</p>
+</div>
+</section>
+<section id="assumptions" class="slide level2">
+<h2>Assumptions</h2>
+<p>Assume</p>
+<p><span class="math display">\[\int \theta(f(z) r(z, \eta) - f(x) r(x,
+\eta)) q_\theta(x,dz)
+\stackrel{\theta \to \infty}{\longrightarrow}
+\Delta(f(\cdot)r(\cdot,\eta))(x)\]</span></p>
+<p><span class="math display">\[\theta\left(
+r(x,\eta) \gamma(x,\eta) - \mu_\theta(x,\eta)
+\right) = F(x,\eta)\]</span></p>
+<div class="fragment">
+<ul>
+<li><p>per capita birth rate of juveniles, <span
+class="math inline">\(\gamma\)</span>, bounded above</p></li>
+<li><p>‘approximate excess growth rate’, <span
+class="math inline">\(F\)</span>, bounded above <span class="red">but
+not necessarily below<span> (logistic growth)</p></li>
+<li><p>instead of <span class="math inline">\(\Delta\)</span> can have
+any uniformly elliptic second order differential operator</p></li>
+</ul>
+</div>
+</section>
+<section id="remarks" class="slide level2">
+<h2>Remarks</h2>
+<div>
+<ul>
+<li class="fragment"><p>Classical models emerge as special cases of the
+scaling limits</p>
+<ul>
+<li class="fragment">Fisher-KPP and Allen-Cahn equations; Bolker-Pacala
+model; spatial branching processes</li>
+</ul></li>
+<li class="fragment"><p>The two stages of reproduction can result in a
+nonlinear diffusion <em>even in the scaling limit</em></p></li>
+<li class="fragment"><p><span class="red">Information about population
+history recovered from patterns of genetic variation.<span> Using a
+lookdown construction, we retain information about genealogies in the
+scaling limit.</p></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="ancestral-lineages" class="title-slide slide level1">
+<h1>Ancestral lineages</h1>
+<div class="blue">
+<p>Consider a single ancestral lineage <span class="math display">\[L_t
+= (\text{location of the genetic ancestor time $t$ ago}).\]</span></p>
+</div>
+<div class="fragment">
+<p>and for this talk, work in the classical PDE limit.</p>
+</div>
+</section>
+<section id="ancestral-lineages-1" class="slide level2">
+<h2>Ancestral lineages</h2>
+<p>Suppose population has a stationary density <span
+class="math inline">\(w(x)\)</span>. Then <span class="math display">\[
+dL_t = r(L_t) \gamma(L_t) 2 \nabla \log(w\gamma)(L_t) dt
++ \sqrt{r(L_t)\gamma(L_t)} dB_t\]</span></p>
+<div class="fragment">
+<ul>
+<li>Lineage speed determined by rate of production of mature offspring
+(<span class="math inline">\(r\gamma\)</span>), <span
+class="math inline">\(\approx\)</span> death,</li>
+<li>and drawn to regions of high total fecundity</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Lineage motion <em>not</em> uniquely determined by population
+denisty: <span class="math inline">\(w\)</span> solves <span
+class="math display">\[ r\Delta(\gamma w) + (r\gamma - \mu) w = 0,
+\]</span></p>
+</div>
+<div class="fragment">
+<p>multiply <span class="math inline">\(r\)</span> and <span
+class="math inline">\(\mu\)</span> by <span
+class="math inline">\(\lambda\)</span>: - same stationary density, but -
+lineages spend more time where <span class="math inline">\(\lambda &lt;
+1\)</span>: those areas have higher long-term fitness.</p>
+</div>
+</section></section>
+<section>
+<section id="reaction-diffusion-equations-and-range-expansion-d1"
+class="title-slide slide level1">
+<h1>Reaction-diffusion equations and range expansion (<span
+class="math inline">\(d=1\)</span>)</h1>
+
+</section>
+<section id="fisher-kpp" class="slide level2">
+<h2>Fisher-KPP</h2>
+<p><span class="math display">\[ \frac{\partial u}{\partial t} =
+\frac{\partial^2 u}{\partial x^2} + u (1-u) \]</span></p>
+<p><span class="math inline">\(\gamma \equiv 1\)</span>, <span
+class="math inline">\(r \equiv 1\)</span>, <span
+class="math inline">\(F(x,m) = 1 - m\)</span>.</p>
+<div class="fragment">
+<p>Traveling wave solution <span class="math inline">\(\varphi(t,x) =
+w(x - 2t)\)</span>, so lineage moves <span class="red">relative to the
+wave front<span> as <span class="math display">\[\begin{aligned}
+dL_t
+&amp;= 2 \nabla \log(w)(L_t) dt + 2 dt + dB_t
+\end{aligned}\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(w(x) \sim e^{-x}\)</span>, so lineages
+<span class="blue">stay in the wave front<span> (where numbers are small
+and the scaling limit breaks down)</p>
+</div>
+</section>
+<section id="allen-cahn" class="slide level2">
+<h2>Allen-Cahn</h2>
+<p><span class="math display">\[ \frac{\partial u}{\partial t} =
+\frac{\partial^2 u}{\partial x^2} + u (1-u) \color{blue}{(2u - 1 + s)}
+\qquad \color{blue}{s \in (0, 2)}\]</span></p>
+<p>Now <span class="math inline">\(F(x,m) = (1 - m)(m - \rho)\)</span>,
+bistable.</p>
+<div class="fragment">
+<p>Traveling wave solution <span class="math inline">\(\varphi(t,x) =
+w(x - st)\)</span> with <span class="math inline">\(w(x) = (1 +
+e^x)^{-1}\)</span>, so lineage moves <span class="red">relative to the
+wave front<span> as <span class="math display">\[\begin{aligned}
+dL_t
+&amp;= \left(s - 2 \frac{e^{L_t}}{1 + e^{L_t}}\right) dt + dB_t ,
+\end{aligned}\]</span></p>
+</div>
+<div class="fragment">
+<p>with stationary distribution <span class="math inline">\(\propto
+e^{sx}(1 + e^x)^{-2}\)</span>.</p>
+</div>
+</section>
+<section
+id="a-less-classical-example-gamma-propto-pop-density-logistic-control"
+class="slide level2">
+<h2>A less classical example <span class="blue"><span
+class="math inline">\(\gamma \propto\)</span> pop density, logistic
+control<span></h2>
+<div class="r-stack">
+<div class="fragment coverup">
+<p><span class="math display">\[ \frac{\partial u}{\partial t} =
+\frac{\partial^2}{\partial x^2} (u^2) + u (1-u) ,
+\qquad
+\phantom{u(t,x) = \left(1 - \exp\left(\frac{1}{2}(x-t)\right)\right)_+}
+\]</span></p>
+</div>
+<div class="fragment coverup">
+<p><span class="math display">\[ \frac{\partial u}{\partial t} =
+\frac{\partial^2}{\partial x^2} (u^2) + u (1-u) ,
+\qquad
+\color{blue}{u(t,x) = \left(1 -
+\exp\left(\frac{1}{2}(x-t)\right)\right)_+}
+\]</span></p>
+</div>
+</div>
+<p>“Effective” density dependent dispersal</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<figure>
+<img data-src="figs/pme_dists.png"
+alt="Curves showing wave shape and stationary distribution." />
+<figcaption aria-hidden="true">Curves showing wave shape and stationary
+distribution.</figcaption>
+</figure>
+</div><div class="column" style="width:50%;">
+<div>
+<ul>
+<li class="fragment">Ancestral lineage has stationary distribution <span
+class="math inline">\(\propto e^x (1 - e^{x/2})\)</span> for <span
+class="math inline">\(x &lt; 0\)</span></li>
+<li class="fragment">With noise can expect quite different genealogy
+from F-KPP.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="closing" class="title-slide slide level1">
+<h1>Closing</h1>
+
+</section>
+<section id="remarks-1" class="slide level2">
+<h2>Remarks</h2>
+<ul>
+<li>In spite of complexity, some mathematical tractability</li>
+<li>A trace of the two-step reproduction mechanisms persists over large
+temporal and spatial scales</li>
+<li>Readily simulated in <a
+href="https://messerlab.org/SLiM">SLiM</a></li>
+<li>Readily extended</li>
+</ul>
+</section>
+<section id="noodling" class="slide level2">
+<h2>noodling</h2>
+<div class="r-stack">
+<div class="fragment">
+<p><em>Will they?</em></p>
+</div>
+<div class="fragment">
+<figure>
+<img data-src="figs/flower.png" alt="Drummond’s anemone" />
+<figcaption aria-hidden="true">Drummond’s anemone</figcaption>
+</figure>
+</div>
+<div class="fragment">
+<p><span class="math display">\[\int_0^\infty e^{ix} dx\]</span></p>
+</div>
+</div>
+</section>
+<section id="section" class="slide level2"
+data-background-image="figs/guillemots_thanks.png"
+data-background-position="center" data-background-size="50%">
+<h2 data-background-image="figs/guillemots_thanks.png"
+data-background-position="center" data-background-size="50%"></h2>
+</section>
+<section class="slide level2">
+
+<figure>
+<img data-src="figs/when_i_was_one.png" alt="When I was one, lyrics" />
+<figcaption aria-hidden="true">When I was one, lyrics</figcaption>
+</figure>
+</section></section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="./reveal.js/plugin/notes/notes.js"></script>
+  <script src="./reveal.js/plugin/search/search.js"></script>
+  <script src="./reveal.js/plugin/zoom/zoom.js"></script>
+  <script src="./reveal.js/plugin/math/math.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
