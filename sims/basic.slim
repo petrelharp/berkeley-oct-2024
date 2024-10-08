@@ -10,7 +10,7 @@ initialize() {
 		"K", 40,           // carrying capacity per unit area
 		"LIFETIME", 4,     // average life span
 		"WIDTH", 25.0,     // width of the simulated area
-		"HEIGHT", 25.0,    // height of the simulated area
+		"HEIGHT", 20.0,    // height of the simulated area
 		"RUNTIME", 200,    // total number of ticks to run the simulation for
 		"L", 1e8,          // genome length
 		"R", 1e-8,         // recombination rate
@@ -129,8 +129,15 @@ function (void)setupParams(object<Dictionary>$ defaults)
 	catn("===========================");
 }
 
+1 first() {
+	defineGlobal("MIN_DENSITY", K);
+	defineGlobal("MAX_DENSITY", 1.4*K);
+}
+
 late() {
 	inds = p1.individuals;
 	x = p1.spatialMapValue(DENSITY, inds.spatialPosition);
-	inds.color = colors((x - min(x))/(max(x) - min(x)), "viridis");
+	defineGlobal("MIN_DENSITY", 0.05 * min(x) + 0.95 * MIN_DENSITY);
+	defineGlobal("MAX_DENSITY", 0.05 * max(x) + 0.95 * MAX_DENSITY);
+	inds.color = colors((x - MIN_DENSITY)/(MAX_DENSITY - MIN_DENSITY), "viridis");
 }

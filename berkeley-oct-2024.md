@@ -51,30 +51,40 @@ and continue to make important contributions to their communities, to the UO, to
 
 ## Motivating question
 
+::: r-stack
+
+:::: {.fragment .coverup}
 > What can we deduce about the history of a population from
 patterns of genetic variation that we observe today?
+::::
 
-- genetic differences produced by mutations
-- which accumulate slowly since common anestors
+:::: {.fragment .coverup}
+> What can we deduce about the <span class="blue">geographic</span> history of a population from
+patterns of genetic variation that we observe today?
+::::
 
-> What can we deduce about the history of a population from
-the genealogies that we observe today?
-
-... which are now *inferrable*.
-
-
-## The world is not <s>flat</s> homogeneous {data-background-image="figs/east_bay.jpg" data-background-position=center}
-
-::: r-stretch
+:::: {.fragment .coverup}
+> What can we deduce about the <span class="blue">geographic</span> of a population from
+the <span class="red">genealogies</span> that we observe today?
+::::
 
 :::
+
+::::: fragment
+![trees in space](figs/locator_spatial_tree_sequence.png){width=70%}
+
+:::{.caption}
+*image by CJ Battey*
+:::
+::::::
+
 
 --------
 
 ::: {.columns}
 :::::: {.column width=50%}
 
-How we usually model it:
+How we usually model space:
 
 ![](figs/lawn.png)
 
@@ -92,6 +102,12 @@ How we usually model it:
 
 :::
 ::::::
+
+## The world is not flat (or, homogeneous) {data-background-image="figs/east_bay.jpg" data-background-position=center}
+
+::: r-stretch
+
+:::
 
 
 # A model
@@ -111,7 +127,7 @@ $$\eta(x) = \text{population at (or close to) } x$$
 :::
 
 ::: fragment
-Can choose parameters to achieve stability.
+Can choose functional forms to achieve stability.
 :::
 
 
@@ -121,11 +137,11 @@ Can choose parameters to achieve stability.
 ::: r-stack 
 
 ::::: fragment
-![A kid about to blow seeds off a flower head](figs/dispersal.png)
+![A newly established plant](figs/established_plant.jpg){width=90%}
 :::::
 
 ::::: fragment
-![A newly established plant](figs/established_plant.jpg)
+![A kid about to blow seeds off a flower head](figs/dispersal.png)
 :::::
 
 :::
@@ -133,7 +149,7 @@ Can choose parameters to achieve stability.
 ::::
 ::::::
 
-::: {.fragment .highlight-green}
+::: {.fragment .highlight-red}
 *We only track mature individuals.*
 :::
 
@@ -155,7 +171,7 @@ Can choose parameters to achieve stability.
 ::: {.columns}
 :::::: {.column width=60%}
 
-- death: $\mu = 0.3$ per generation
+- death: $\mu = 0.3$ per time step
 
 - establishment: $r = 0.7$
 
@@ -166,7 +182,7 @@ Can choose parameters to achieve stability.
 - reproduction: with $K=2$, $\lambda=3$,
 $$ \gamma = \frac{\lambda}{1 + \text{(local density)}/K} $$
 
-- non-spatial equilibrium density:
+- non-spatial 'equilibrium density':
 $$ K \left( \frac{\lambda}{1 - r} - 1 \right) .$$
 
 :::
@@ -207,7 +223,6 @@ Low dispersal distance copamred to distance over which negatively influenced by 
 can lead to strong clumping - <span class="fragment">true even in deterministic model!</span>
 
 
-
 # Characterising the model
 
 ## Local density
@@ -241,24 +256,24 @@ There are *three* interaction kernels, $\rho_r$, $\rho_\gamma$, and $\rho_\mu$,
 which need not be the same.
 
 
-## Scaling the model  -- <span class="red">parameters $N$, $\theta$</span>
+## Scaling the model  -- <span class="red">parameters $N$, $\theta \to \infty$</span>
 
 Birth-death process with dynamics:
 
 - A juvenile is born per capita rate ${\color{red}\theta}\gamma(x, \eta(x))$
 - Dispersal distribution $q_{\color{red}\theta}(x, dy)$ (Gaussian <span class="red">mean and variance order $1/\theta$</span>)
 - (Instantaneous) establishment probability $r(y, \eta(y))$
-- Death of mature individuals rate $\mu_{\color{red}\theta}(x, \eta(x))$
+- Death of mature individuals rate ${\color{red}\theta}\mu_{\color{red}\theta}(x, \eta(x))$
 
 . . .
 
 Assume: 
-$$\int \theta\left( r(z, \eta) f(z) - r(x,\eta)f(x) \right) q_\theta(x, dz)
-\stackrel{\theta\to\infty}{\longrightarrow} \Delta\left(r(\cdot, \eta) f(\cdot)\right)(x) $$
+$$ \theta\left( r(z, \eta) \gamma(x, \eta) - \mu_\theta(x, \eta)\right) = F(x,\eta)$$
 
 . . . 
 
-$$ \theta\left( r(z, \eta) \gamma(x, \eta) - \mu_\theta(x, \eta)\right) = F(x,\eta)$$
+$$\int \theta\left( r(z, \eta) f(z) - r(x,\eta)f(x) \right) q_\theta(x, dz)
+\stackrel{\theta\to\infty}{\longrightarrow} \Delta\left(r(\cdot, \eta) f(\cdot)\right)(x) $$
 
 . . .
 
@@ -268,23 +283,26 @@ $$ \theta\left( r(z, \eta) \gamma(x, \eta) - \mu_\theta(x, \eta)\right) = F(x,\e
 
 . . .
 
-(See paper for more general case:
-an operator instead of $\Delta$.)
+See paper for more general case:
+inhomogeneous diffusion instead of $\Delta$.
 
 
-## How do things change, locally? <span class='smallish'>$\langle f, \eta \rangle = \frac{1}{N} f(X_i) = \int f(x) \eta(dx)$</span>
+## How do things change, locally? <span class='smallish'>$\langle f, \eta \rangle = \frac{1}{N} \sum f(X_i) = \int f(x) \eta(dx)$</span>
 
+::: incremental
 - Individual at $x$ gives birth to a single mature offspring at $z$ at rate
-$$ \theta \gamma(x, \eta) r(z, \eta) q_\theta(x,dz) \qquad \text{increment} \langle f,\eta \rangle \text{by} \frac{1}{N} f(z) .$$
+$$ \color{blue}{\theta \gamma(x, \eta) q_\theta(x,dz) r(z, \eta)} \qquad \color{red}{\text{increment } \langle f,\eta \rangle \text{ by } \frac{1}{N} f(z)}$$
 
 - Individual at $x$ dies at rate 
-$\theta\mu_\theta(x,\eta)$ increment $\langle f,\eta \rangle$ by $-\frac{1}{N} f(x)$
+$$\color{blue}{\theta\mu_\theta(x,\eta)} \qquad \color{red}{\text{increment } \langle f,\eta \rangle \text{ by } -\frac{1}{N} f(x)}$$
+:::
 
 . . .
 
 
 $$\begin{aligned}
 \frac{d}{dt}\mathbb{E}\left[\langle f, \eta_t\rangle \big| \eta_0 = \eta\right] \big|_{t=0} 
+\hspace{20em}
 \end{aligned}$$
 
 ::: r-stack
@@ -339,12 +357,11 @@ $$
     <span class="red">increment $\langle f, \eta \rangle = -\frac{1}{N} f(x)$</span>
 
 $$\begin{aligned}
-&N \theta \big\{ \big\langle \int \frac{1}{N^2} f^2(z) r(z,\eta) q_\theta(x,dz), \eta(dx) \big\rangle
+&N \theta \big\{ \int \int \frac{1}{N^2} f^2(z) r(z,\eta) q_\theta(x,dz) \gamma(x,\eta) \eta(dx)
 \\&\qquad \qquad {} +
-\big\langle \frac{1}{N^2} f^2(z) \mu_\theta(x,\eta), \eta(dx) \big\rangle \big\}
-\\&= \frac{\theta}{N} \big\langle
-\gamma(x,\eta) \int f^2(z) r(z,\eta) q_\theta(x,dz) + f^2(x) \mu_\theta(x,\eta), \eta(dx)
-\big\rangle
+\int \frac{1}{N^2} f^2(z) \mu_\theta(x,\eta) \eta(dx) \big\}
+\\&\qquad = \frac{\theta}{N} \int
+\left\{ \int f^2(z) r(z,\eta) q_\theta(x,dz) \gamma(x,\eta) + f^2(x) \mu_\theta(x,\eta) \right\} \eta(dx)
 \end{aligned}$$
 
 ::: {.fragment .red}
@@ -356,9 +373,11 @@ $$
 :::
 
 ::: fragment
-<span class="blue">$\stackrel{\theta\to\infty}{\longrightarrow} \alpha \langle 2 r(x,\eta) \gamma(x,\eta) f^2(x), \eta(dx) \rangle$</span>
-where
-<span class="red">$\alpha := \lim \frac{\theta}{N}$</span>.
+$$\hspace{10em}\color{blue}{
+\stackrel{\theta\to\infty}{\longrightarrow} \alpha \int 2 r(x,\eta) \gamma(x,\eta) f^2(x) \eta(dx) }
+\qquad \text{where }
+\color{red}{ \alpha := \lim \frac{\theta}{N} }
+$$
 :::
 
 ## small / large $\alpha$:
@@ -374,19 +393,19 @@ $$\begin{aligned}
 - \int_0^t \big\langle \gamma(x,\eta_s)\Delta\left(f(\cdot)r(\cdot,\eta_s)\right)(x) + F(x,\eta_s)f(x),
     \eta_s(dx) \big\rangle ds
 \end{aligned}$$
-is a martingale, $M_f(\cdot)$, with
+is a martingale, $M_f(\cdot)$, with conditional quadratic variation
 $$ \langle M_f \rangle_t = \alpha \int_0^t \big \langle 2 r(x,\eta_s)\gamma(x,\eta_s) f^2(x), \eta_s(x) \big \rangle ds . $$
 
 
 ::: incremental
-- $\alpha=0$: non-local PDE
+- $\alpha=\lim \frac{\theta}{N} =0$: non-local PDE <span class="blue fragment">(since $\gamma(x,\eta_s) = \gamma(x,\rho_\gamma*\eta_s(x))$)</span>
 - can also recover 'local' PDEs $$\partial_t \eta = r \Delta(\gamma \eta) + F\eta$$
 - $\alpha > 0$: nonlinear superprocess
 :::
 
 . . .
 
-e.g., $\gamma\equiv1$, $r\equiv1$, $F=1-h*\eta$, (diffusion limit of) Bolker-Pacala model: spatial branching process; reproductive success decreases in crowded regions.
+e.g., $\gamma\equiv1$, $r\equiv1$, $F=1-\rho*\eta$, (diffusion limit of) Bolker-Pacala model: spatial branching process; reproductive success decreases in crowded regions.
 
 ## Assumptions
 
@@ -407,7 +426,9 @@ r(x,\eta) \gamma(x,\eta) - \mu_\theta(x,\eta)
 - 'approximate excess growth rate', $F$, bounded above
     <span class="red">but not necessarily below<span> (logistic growth)
 
-- instead of $\Delta$ can have any uniformly elliptic second order differential operator
+. . . 
+
+Instead of $\Delta$ can have any uniformly elliptic second order differential operator
 
 ## Remarks
 
@@ -417,12 +438,12 @@ r(x,\eta) \gamma(x,\eta) - \mu_\theta(x,\eta)
         Bolker-Pacala model;
         spatial branching processes
     
-- The two stages of reproduction can result in a nonlinear diffusion
-    *even in the scaling limit*
+- The two stages of reproduction can result in a <span class="blue">nonlinear diffusion</span>
+    *even in the scaling limit*: $$\partial_t \eta = r \Delta(\gamma \eta) + F\eta$$
 
-- <span class="red">Information about population history recovered from patterns of genetic variation.<span>
-    Using a lookdown construction, we retain information about genealogies
-    in the scaling limit.
+- Using a <span class="blue">lookdown construction</span>, we retain information about genealogies
+    in the scaling limit, and hence
+    information about population history.
 
 :::
 
@@ -435,7 +456,12 @@ $$L_t = (\text{location of the genetic ancestor time $t$ ago}).$$
 
 . . .
 
-and for this talk, work in the classical PDE limit.
+and for this talk, work in the classical PDE limit, so
+$$\partial_t \eta = r \Delta(\gamma \eta) + F\eta .$$
+
+---------
+
+![](sims/pme_expansion.lineages.mp4)
 
 ## Ancestral lineages
 
@@ -445,18 +471,23 @@ $$ dL_t = r(L_t) \gamma(L_t) 2 \nabla \log(w\gamma)(L_t) dt
 
 . . .
 
-- Lineage speed determined by rate of production of mature offspring ($r\gamma$), $\approx$ death,
-- and drawn to regions of high total fecundity
+::: incremental
+- Lineage speed determined by rate of production of mature offspring ($r\gamma$, $\approx$ death),
+- and drawn to regions of high total fecundity ($w \gamma$).
+- Reversible with respect to $$\color{red}{\pi(x) = \frac{\gamma(x,w(x)) w(x)^2 }{ r(x,w(x))}.} $$
+:::
+
 
 . . .
 
-Lineage motion *not* uniquely determined by population denisty:
+<span class="blue">Lineage motion *tells us more* than stationary population density:</span>
 $w$ solves
 $$ r\Delta(\gamma w) + (r\gamma - \mu) w = 0, $$
 
 . . .
 
 multiply $r$ and $\mu$ by $\lambda$:
+
 - same stationary density, but
 - lineages spend more time where $\lambda < 1$: those areas have higher long-term fitness.
 
@@ -470,7 +501,7 @@ $\gamma \equiv 1$, $r \equiv 1$, $F(x,m) = 1 - m$.
 
 . . .
 
-Traveling wave solution $\varphi(t,x) = w(x - 2t)$,
+Traveling wave solution $u(t,x) = w(x - 2t)$,
 so lineage moves <span class="red">relative to the wave front<span> as
 $$\begin{aligned}
 dL_t 
@@ -482,12 +513,17 @@ dL_t
 $w(x) \sim e^{-x}$, so lineages <span class="blue">stay in the wave front<span>
 (where numbers are small and the scaling limit breaks down)
 
+---------
+
+![](sims/expansion.lineages.mp4)
+
+
 ## Allen-Cahn
 
 $$ \frac{\partial u}{\partial t} = \frac{\partial^2 u}{\partial x^2} + u (1-u) \color{blue}{(2u - 1 + s)} 
 \qquad \color{blue}{s \in (0, 2)}$$
 
-Now $F(x,m) = (1 - m)(m - \rho)$, bistable.
+Now $F(x,m) = (1 - m)(2m-1+s)$, bistable.
 
 . . .
 
@@ -503,6 +539,11 @@ dL_t
 
 with stationary distribution $\propto e^{sx}(1 + e^x)^{-2}$.
 
+. . .
+
+Genealogies known to be Kingman for $s<1$: Etheridge-Penington 2022
+
+
 ## A less classical example <span class="blue">$\gamma \propto$ pop density, logistic control<span>
 
 :::: r-stack
@@ -517,13 +558,15 @@ $$
 ::: {.fragment .coverup}
 $$ \frac{\partial u}{\partial t} = \frac{\partial^2}{\partial x^2} (u^2) + u (1-u) ,
 \qquad
-\color{blue}{u(t,x) = \left(1 - \exp\left(\frac{1}{2}(x-t)\right)\right)_+}
+\color{red}{u(t,x) = \left(1 - \exp\left(\frac{1}{2}(x-t)\right)\right)_+}
 $$
 :::
 
 ::::
 
-"Effective" density dependent dispersal
+. . .
+
+"Effective" density dependent dispersal -- a <span class="blue">porous medium equation</span>
 
 . . .
 
@@ -539,37 +582,29 @@ $$
 :::: incremental
 - Ancestral lineage has stationary distribution
 $\propto e^x (1 - e^{x/2})$ for $x < 0$
-- With noise can expect quite different genealogy from F-KPP.
+- With noise: genealogies also Kingman?
 ::::
 ::::::
 :::
 
 # Closing
 
-## Remarks
 
+::: incremental
+- PDE/superprocess dichotomy: $\lim \frac{\theta}{N} > 0$
+- Nonlinear PDE limits:
+    <span class="blue">$$ \partial_t \eta = r \Delta(\gamma \eta) + F \eta . $$</span>
+- Lineage motion well-understood in deterministic limit, using a lookdown.
+- *Next:* coalescence?
+:::
+
+<span class="red fragment">*Remarks:*</span>
+
+::: incremental
 - In spite of complexity, some mathematical tractability
 - A trace of the two-step reproduction mechanisms persists over large temporal and spatial scales
 - Readily simulated in [SLiM](https://messerlab.org/SLiM)
 - Readily extended
-
-
-## noodling
-
-::: r-stack
-
-:::: fragment
-*Will they?*
-::::
-
-:::: fragment
-![Drummond's anemone](figs/flower.png)
-::::
-
-:::: fragment
-$$\int_0^\infty e^{ix} dx$$
-::::
-
 :::
 
 

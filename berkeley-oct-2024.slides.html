@@ -165,35 +165,44 @@ and to the world.</p>
 </section>
 <section id="motivating-question" class="slide level2">
 <h2>Motivating question</h2>
+<div class="r-stack">
+<div class="fragment coverup">
 <blockquote>
 <p>What can we deduce about the history of a population from patterns of
 genetic variation that we observe today?</p>
 </blockquote>
-<ul>
-<li>genetic differences produced by mutations</li>
-<li>which accumulate slowly since common anestors</li>
-</ul>
+</div>
+<div class="fragment coverup">
 <blockquote>
-<p>What can we deduce about the history of a population from the
-genealogies that we observe today?</p>
+<p>What can we deduce about the <span class="blue">geographic</span>
+history of a population from patterns of genetic variation that we
+observe today?</p>
 </blockquote>
-<p>… which are now <em>inferrable</em>.</p>
-</section>
-<section id="the-world-is-not-flat-homogeneous" class="slide level2"
-data-background-image="figs/east_bay.jpg"
-data-background-position="center">
-<h2 data-background-image="figs/east_bay.jpg"
-data-background-position="center">The world is not <s>flat</s>
-homogeneous</h2>
-<div class="r-stretch">
-
+</div>
+<div class="fragment coverup">
+<blockquote>
+<p>What can we deduce about the <span class="blue">geographic</span> of
+a population from the <span class="red">genealogies</span> that we
+observe today?</p>
+</blockquote>
+</div>
+</div>
+<div class="fragment">
+<figure>
+<img data-src="figs/locator_spatial_tree_sequence.png"
+style="width:70.0%" alt="trees in space" />
+<figcaption aria-hidden="true">trees in space</figcaption>
+</figure>
+<div class="caption">
+<p><em>image by CJ Battey</em></p>
+</div>
 </div>
 </section>
 <section class="slide level2">
 
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>How we usually model it:</p>
+<p>How we usually model space:</p>
 <p><img data-src="figs/lawn.png" /></p>
 <p><em>“Over large spatial and temporal scales local details should wash
 out”</em></p>
@@ -206,6 +215,16 @@ out”</em></p>
 </figure>
 </div>
 </div>
+</div>
+</section>
+<section id="the-world-is-not-flat-or-homogeneous" class="slide level2"
+data-background-image="figs/east_bay.jpg"
+data-background-position="center">
+<h2 data-background-image="figs/east_bay.jpg"
+data-background-position="center">The world is not flat (or,
+homogeneous)</h2>
+<div class="r-stretch">
+
 </div>
 </section></section>
 <section>
@@ -237,10 +256,17 @@ class="blue fragment"><em>rate <span class="math inline">\(\mu(x,
 </ul>
 </div>
 <div class="fragment">
-<p>Can choose parameters to achieve stability.</p>
+<p>Can choose functional forms to achieve stability.</p>
 </div>
 </div><div class="column" style="width:40%;">
 <div class="r-stack">
+<div class="fragment">
+<figure>
+<img data-src="figs/established_plant.jpg" style="width:90.0%"
+alt="A newly established plant" />
+<figcaption aria-hidden="true">A newly established plant</figcaption>
+</figure>
+</div>
 <div class="fragment">
 <figure>
 <img data-src="figs/dispersal.png"
@@ -249,17 +275,10 @@ alt="A kid about to blow seeds off a flower head" />
 head</figcaption>
 </figure>
 </div>
-<div class="fragment">
-<figure>
-<img data-src="figs/established_plant.jpg"
-alt="A newly established plant" />
-<figcaption aria-hidden="true">A newly established plant</figcaption>
-</figure>
 </div>
 </div>
 </div>
-</div>
-<div class="fragment highlight-green">
+<div class="fragment highlight-red">
 <p><em>We only track mature individuals.</em></p>
 </div>
 </section></section>
@@ -282,8 +301,8 @@ alt="Gilia Patterson" />
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li><p>death: <span class="math inline">\(\mu = 0.3\)</span> per
-generation</p></li>
+<li><p>death: <span class="math inline">\(\mu = 0.3\)</span> per time
+step</p></li>
 <li><p>establishment: <span class="math inline">\(r =
 0.7\)</span></p></li>
 <li><p>dispersal: Gaussian with SD <span
@@ -294,8 +313,8 @@ class="math inline">\(\epsilon\)</span></p></li>
 <span class="math inline">\(\lambda=3\)</span>, <span
 class="math display">\[ \gamma = \frac{\lambda}{1 + \text{(local
 density)}/K} \]</span></p></li>
-<li><p>non-spatial equilibrium density: <span class="math display">\[ K
-\left( \frac{\lambda}{1 - r} - 1 \right) .\]</span></p></li>
+<li><p>non-spatial ‘equilibrium density’: <span class="math display">\[
+K \left( \frac{\lambda}{1 - r} - 1 \right) .\]</span></p></li>
 </ul>
 </div><div class="column" style="width:40%;">
 <figure>
@@ -388,10 +407,11 @@ class="math inline">\(\rho_\gamma\)</span>, and <span
 class="math inline">\(\rho_\mu\)</span>, which need not be the same.</p>
 </div>
 </section>
-<section id="scaling-the-model-parameters-n-theta" class="slide level2">
+<section id="scaling-the-model-parameters-n-theta-to-infty"
+class="slide level2">
 <h2>Scaling the model – <span class="red">parameters <span
-class="math inline">\(N\)</span>, <span
-class="math inline">\(\theta\)</span></span></h2>
+class="math inline">\(N\)</span>, <span class="math inline">\(\theta \to
+\infty\)</span></span></h2>
 <p>Birth-death process with dynamics:</p>
 <ul>
 <li>A juvenile is born per capita rate <span
@@ -404,17 +424,18 @@ class="math inline">\(1/\theta\)</span></span>)</li>
 <li>(Instantaneous) establishment probability <span
 class="math inline">\(r(y, \eta(y))\)</span></li>
 <li>Death of mature individuals rate <span
-class="math inline">\(\mu_{\color{red}\theta}(x, \eta(x))\)</span></li>
+class="math inline">\({\color{red}\theta}\mu_{\color{red}\theta}(x,
+\eta(x))\)</span></li>
 </ul>
 <div class="fragment">
-<p>Assume: <span class="math display">\[\int \theta\left( r(z, \eta)
-f(z) - r(x,\eta)f(x) \right) q_\theta(x, dz)
-\stackrel{\theta\to\infty}{\longrightarrow} \Delta\left(r(\cdot, \eta)
-f(\cdot)\right)(x) \]</span></p>
+<p>Assume: <span class="math display">\[ \theta\left( r(z, \eta)
+\gamma(x, \eta) - \mu_\theta(x, \eta)\right) = F(x,\eta)\]</span></p>
 </div>
 <div class="fragment">
-<p><span class="math display">\[ \theta\left( r(z, \eta) \gamma(x, \eta)
-- \mu_\theta(x, \eta)\right) = F(x,\eta)\]</span></p>
+<p><span class="math display">\[\int \theta\left( r(z, \eta) f(z) -
+r(x,\eta)f(x) \right) q_\theta(x, dz)
+\stackrel{\theta\to\infty}{\longrightarrow} \Delta\left(r(\cdot, \eta)
+f(\cdot)\right)(x) \]</span></p>
 </div>
 <div class="fragment">
 <div class="tiny">
@@ -424,31 +445,36 @@ and net per capita growth rate <span class="math inline">\(\propto
 </div>
 </div>
 <div class="fragment">
-<p>(See paper for more general case: an operator instead of <span
-class="math inline">\(\Delta\)</span>.)</p>
+<p>See paper for more general case: inhomogeneous diffusion instead of
+<span class="math inline">\(\Delta\)</span>.</p>
 </div>
 </section>
 <section
-id="how-do-things-change-locally-langle-f-eta-rangle-frac1n-fx_i-int-fx-etadx"
+id="how-do-things-change-locally-langle-f-eta-rangle-frac1n-sum-fx_i-int-fx-etadx"
 class="slide level2">
 <h2>How do things change, locally? <span class="smallish"><span
-class="math inline">\(\langle f, \eta \rangle = \frac{1}{N} f(X_i) =
-\int f(x) \eta(dx)\)</span></span></h2>
+class="math inline">\(\langle f, \eta \rangle = \frac{1}{N} \sum f(X_i)
+= \int f(x) \eta(dx)\)</span></span></h2>
+<div>
 <ul>
-<li><p>Individual at <span class="math inline">\(x\)</span> gives birth
-to a single mature offspring at <span class="math inline">\(z\)</span>
-at rate <span class="math display">\[ \theta \gamma(x, \eta) r(z, \eta)
-q_\theta(x,dz) \qquad \text{increment} \langle f,\eta \rangle \text{by}
-\frac{1}{N} f(z) .\]</span></p></li>
-<li><p>Individual at <span class="math inline">\(x\)</span> dies at rate
-<span class="math inline">\(\theta\mu_\theta(x,\eta)\)</span> increment
-<span class="math inline">\(\langle f,\eta \rangle\)</span> by <span
-class="math inline">\(-\frac{1}{N} f(x)\)</span></p></li>
+<li class="fragment"><p>Individual at <span
+class="math inline">\(x\)</span> gives birth to a single mature
+offspring at <span class="math inline">\(z\)</span> at rate <span
+class="math display">\[ \color{blue}{\theta \gamma(x, \eta)
+q_\theta(x,dz) r(z, \eta)} \qquad \color{red}{\text{increment } \langle
+f,\eta \rangle \text{ by } \frac{1}{N} f(z)}\]</span></p></li>
+<li class="fragment"><p>Individual at <span
+class="math inline">\(x\)</span> dies at rate <span
+class="math display">\[\color{blue}{\theta\mu_\theta(x,\eta)} \qquad
+\color{red}{\text{increment } \langle f,\eta \rangle \text{ by }
+-\frac{1}{N} f(x)}\]</span></p></li>
 </ul>
+</div>
 <div class="fragment">
 <p><span class="math display">\[\begin{aligned}
 \frac{d}{dt}\mathbb{E}\left[\langle f, \eta_t\rangle \big| \eta_0 =
 \eta\right] \big|_{t=0}
+\hspace{20em}
 \end{aligned}\]</span></p>
 <div class="r-stack">
 <div class="fragment coverup">
@@ -507,15 +533,13 @@ class="math inline">\(\langle f, \eta \rangle = -\frac{1}{N}
 f(x)\)</span></span></p></li>
 </ul>
 <p><span class="math display">\[\begin{aligned}
-&amp;N \theta \big\{ \big\langle \int \frac{1}{N^2} f^2(z) r(z,\eta)
-q_\theta(x,dz), \eta(dx) \big\rangle
+&amp;N \theta \big\{ \int \int \frac{1}{N^2} f^2(z) r(z,\eta)
+q_\theta(x,dz) \gamma(x,\eta) \eta(dx)
 \\&amp;\qquad \qquad {} +
-\big\langle \frac{1}{N^2} f^2(z) \mu_\theta(x,\eta), \eta(dx)
-\big\rangle \big\}
-\\&amp;= \frac{\theta}{N} \big\langle
-\gamma(x,\eta) \int f^2(z) r(z,\eta) q_\theta(x,dz) + f^2(x)
-\mu_\theta(x,\eta), \eta(dx)
-\big\rangle
+\int \frac{1}{N^2} f^2(z) \mu_\theta(x,\eta) \eta(dx) \big\}
+\\&amp;\qquad = \frac{\theta}{N} \int
+\left\{ \int f^2(z) r(z,\eta) q_\theta(x,dz) \gamma(x,\eta) + f^2(x)
+\mu_\theta(x,\eta) \right\} \eta(dx)
 \end{aligned}\]</span></p>
 <div class="fragment red">
 <p><span class="math display">\[
@@ -525,12 +549,12 @@ q_\theta(x,dz), \eta(dx) \big\rangle
 \]</span></p>
 </div>
 <div class="fragment">
-<p><span class="blue"><span
-class="math inline">\(\stackrel{\theta\to\infty}{\longrightarrow} \alpha
-\langle 2 r(x,\eta) \gamma(x,\eta) f^2(x), \eta(dx)
-\rangle\)</span></span> where <span class="red"><span
-class="math inline">\(\alpha := \lim
-\frac{\theta}{N}\)</span></span>.</p>
+<p><span class="math display">\[\hspace{10em}\color{blue}{
+\stackrel{\theta\to\infty}{\longrightarrow} \alpha \int 2 r(x,\eta)
+\gamma(x,\eta) f^2(x) \eta(dx) }
+\qquad \text{where }
+\color{red}{ \alpha := \lim \frac{\theta}{N} }
+\]</span></p>
 </div>
 </section>
 <section id="small-large-alpha" class="slide level2">
@@ -550,14 +574,17 @@ alt="Snapshot of a simulation showing patchy distribution of indivdiuals" /></p>
 F(x,\eta_s)f(x),
     \eta_s(dx) \big\rangle ds
 \end{aligned}\]</span> is a martingale, <span
-class="math inline">\(M_f(\cdot)\)</span>, with <span
-class="math display">\[ \langle M_f \rangle_t = \alpha \int_0^t \big
-\langle 2 r(x,\eta_s)\gamma(x,\eta_s) f^2(x), \eta_s(x) \big \rangle ds
-. \]</span></p>
+class="math inline">\(M_f(\cdot)\)</span>, with conditional quadratic
+variation <span class="math display">\[ \langle M_f \rangle_t = \alpha
+\int_0^t \big \langle 2 r(x,\eta_s)\gamma(x,\eta_s) f^2(x), \eta_s(x)
+\big \rangle ds . \]</span></p>
 <div>
 <ul>
-<li class="fragment"><span class="math inline">\(\alpha=0\)</span>:
-non-local PDE</li>
+<li class="fragment"><span class="math inline">\(\alpha=\lim
+\frac{\theta}{N} =0\)</span>: non-local PDE <span
+class="blue fragment">(since <span
+class="math inline">\(\gamma(x,\eta_s) =
+\gamma(x,\rho_\gamma*\eta_s(x))\)</span>)</span></li>
 <li class="fragment">can also recover ‘local’ PDEs <span
 class="math display">\[\partial_t \eta = r \Delta(\gamma \eta) +
 F\eta\]</span></li>
@@ -568,7 +595,7 @@ nonlinear superprocess</li>
 <div class="fragment">
 <p>e.g., <span class="math inline">\(\gamma\equiv1\)</span>, <span
 class="math inline">\(r\equiv1\)</span>, <span
-class="math inline">\(F=1-h*\eta\)</span>, (diffusion limit of)
+class="math inline">\(F=1-\rho*\eta\)</span>, (diffusion limit of)
 Bolker-Pacala model: spatial branching process; reproductive success
 decreases in crowded regions.</p>
 </div>
@@ -590,9 +617,11 @@ class="math inline">\(\gamma\)</span>, bounded above</p></li>
 <li><p>‘approximate excess growth rate’, <span
 class="math inline">\(F\)</span>, bounded above <span class="red">but
 not necessarily below<span> (logistic growth)</p></li>
-<li><p>instead of <span class="math inline">\(\Delta\)</span> can have
-any uniformly elliptic second order differential operator</p></li>
 </ul>
+</div>
+<div class="fragment">
+<p>Instead of <span class="math inline">\(\Delta\)</span> can have any
+uniformly elliptic second order differential operator</p>
 </div>
 </section>
 <section id="remarks" class="slide level2">
@@ -606,11 +635,12 @@ scaling limits</p>
 model; spatial branching processes</li>
 </ul></li>
 <li class="fragment"><p>The two stages of reproduction can result in a
-nonlinear diffusion <em>even in the scaling limit</em></p></li>
-<li class="fragment"><p><span class="red">Information about population
-history recovered from patterns of genetic variation.<span> Using a
-lookdown construction, we retain information about genealogies in the
-scaling limit.</p></li>
+<span class="blue">nonlinear diffusion</span> <em>even in the scaling
+limit</em>: <span class="math display">\[\partial_t \eta = r
+\Delta(\gamma \eta) + F\eta\]</span></p></li>
+<li class="fragment"><p>Using a <span class="blue">lookdown
+construction</span>, we retain information about genealogies in the
+scaling limit, and hence information about population history.</p></li>
 </ul>
 </div>
 </section></section>
@@ -622,8 +652,15 @@ scaling limit.</p></li>
 = (\text{location of the genetic ancestor time $t$ ago}).\]</span></p>
 </div>
 <div class="fragment">
-<p>and for this talk, work in the classical PDE limit.</p>
+<p>and for this talk, work in the classical PDE limit, so <span
+class="math display">\[\partial_t \eta = r \Delta(\gamma \eta) + F\eta
+.\]</span></p>
 </div>
+</section>
+<section class="slide level2">
+
+<p><video data-src="sims/pme_expansion.lineages.mp4" controls=""><a
+href="sims/pme_expansion.lineages.mp4">Video</a></video></p>
 </section>
 <section id="ancestral-lineages-1" class="slide level2">
 <h2>Ancestral lineages</h2>
@@ -632,25 +669,34 @@ class="math inline">\(w(x)\)</span>. Then <span class="math display">\[
 dL_t = r(L_t) \gamma(L_t) 2 \nabla \log(w\gamma)(L_t) dt
 + \sqrt{r(L_t)\gamma(L_t)} dB_t\]</span></p>
 <div class="fragment">
+<div>
 <ul>
-<li>Lineage speed determined by rate of production of mature offspring
-(<span class="math inline">\(r\gamma\)</span>), <span
-class="math inline">\(\approx\)</span> death,</li>
-<li>and drawn to regions of high total fecundity</li>
+<li class="fragment">Lineage speed determined by rate of production of
+mature offspring (<span class="math inline">\(r\gamma\)</span>, <span
+class="math inline">\(\approx\)</span> death),</li>
+<li class="fragment">and drawn to regions of high total fecundity (<span
+class="math inline">\(w \gamma\)</span>).</li>
+<li class="fragment">Reversible with respect to <span
+class="math display">\[\color{red}{\pi(x) = \frac{\gamma(x,w(x)) w(x)^2
+}{ r(x,w(x))}.} \]</span></li>
 </ul>
 </div>
+</div>
 <div class="fragment">
-<p>Lineage motion <em>not</em> uniquely determined by population
-denisty: <span class="math inline">\(w\)</span> solves <span
-class="math display">\[ r\Delta(\gamma w) + (r\gamma - \mu) w = 0,
-\]</span></p>
+<p><span class="blue">Lineage motion <em>tells us more</em> than
+stationary population density:</span> <span
+class="math inline">\(w\)</span> solves <span class="math display">\[
+r\Delta(\gamma w) + (r\gamma - \mu) w = 0, \]</span></p>
 </div>
 <div class="fragment">
 <p>multiply <span class="math inline">\(r\)</span> and <span
 class="math inline">\(\mu\)</span> by <span
-class="math inline">\(\lambda\)</span>: - same stationary density, but -
-lineages spend more time where <span class="math inline">\(\lambda &lt;
-1\)</span>: those areas have higher long-term fitness.</p>
+class="math inline">\(\lambda\)</span>:</p>
+<ul>
+<li>same stationary density, but</li>
+<li>lineages spend more time where <span class="math inline">\(\lambda
+&lt; 1\)</span>: those areas have higher long-term fitness.</li>
+</ul>
 </div>
 </section></section>
 <section>
@@ -668,9 +714,9 @@ class="math inline">\(d=1\)</span>)</h1>
 class="math inline">\(r \equiv 1\)</span>, <span
 class="math inline">\(F(x,m) = 1 - m\)</span>.</p>
 <div class="fragment">
-<p>Traveling wave solution <span class="math inline">\(\varphi(t,x) =
-w(x - 2t)\)</span>, so lineage moves <span class="red">relative to the
-wave front<span> as <span class="math display">\[\begin{aligned}
+<p>Traveling wave solution <span class="math inline">\(u(t,x) = w(x -
+2t)\)</span>, so lineage moves <span class="red">relative to the wave
+front<span> as <span class="math display">\[\begin{aligned}
 dL_t
 &amp;= 2 \nabla \log(w)(L_t) dt + 2 dt + dB_t
 \end{aligned}\]</span></p>
@@ -681,12 +727,17 @@ dL_t
 and the scaling limit breaks down)</p>
 </div>
 </section>
+<section class="slide level2">
+
+<p><video data-src="sims/expansion.lineages.mp4" controls=""><a
+href="sims/expansion.lineages.mp4">Video</a></video></p>
+</section>
 <section id="allen-cahn" class="slide level2">
 <h2>Allen-Cahn</h2>
 <p><span class="math display">\[ \frac{\partial u}{\partial t} =
 \frac{\partial^2 u}{\partial x^2} + u (1-u) \color{blue}{(2u - 1 + s)}
 \qquad \color{blue}{s \in (0, 2)}\]</span></p>
-<p>Now <span class="math inline">\(F(x,m) = (1 - m)(m - \rho)\)</span>,
+<p>Now <span class="math inline">\(F(x,m) = (1 - m)(2m-1+s)\)</span>,
 bistable.</p>
 <div class="fragment">
 <p>Traveling wave solution <span class="math inline">\(\varphi(t,x) =
@@ -700,6 +751,10 @@ dL_t
 <div class="fragment">
 <p>with stationary distribution <span class="math inline">\(\propto
 e^{sx}(1 + e^x)^{-2}\)</span>.</p>
+</div>
+<div class="fragment">
+<p>Genealogies known to be Kingman for <span
+class="math inline">\(s&lt;1\)</span>: Etheridge-Penington 2022</p>
 </div>
 </section>
 <section
@@ -720,12 +775,15 @@ control<span></h2>
 <p><span class="math display">\[ \frac{\partial u}{\partial t} =
 \frac{\partial^2}{\partial x^2} (u^2) + u (1-u) ,
 \qquad
-\color{blue}{u(t,x) = \left(1 -
+\color{red}{u(t,x) = \left(1 -
 \exp\left(\frac{1}{2}(x-t)\right)\right)_+}
 \]</span></p>
 </div>
 </div>
-<p>“Effective” density dependent dispersal</p>
+<div class="fragment">
+<p>“Effective” density dependent dispersal – a <span class="blue">porous
+medium equation</span></p>
+</div>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -741,8 +799,7 @@ distribution.</figcaption>
 <li class="fragment">Ancestral lineage has stationary distribution <span
 class="math inline">\(\propto e^x (1 - e^{x/2})\)</span> for <span
 class="math inline">\(x &lt; 0\)</span></li>
-<li class="fragment">With noise can expect quite different genealogy
-from F-KPP.</li>
+<li class="fragment">With noise: genealogies also Kingman?</li>
 </ul>
 </div>
 </div>
@@ -752,34 +809,29 @@ from F-KPP.</li>
 <section>
 <section id="closing" class="title-slide slide level1">
 <h1>Closing</h1>
-
-</section>
-<section id="remarks-1" class="slide level2">
-<h2>Remarks</h2>
+<div>
 <ul>
-<li>In spite of complexity, some mathematical tractability</li>
-<li>A trace of the two-step reproduction mechanisms persists over large
-temporal and spatial scales</li>
-<li>Readily simulated in <a
-href="https://messerlab.org/SLiM">SLiM</a></li>
-<li>Readily extended</li>
+<li class="fragment">PDE/superprocess dichotomy: <span
+class="math inline">\(\lim \frac{\theta}{N} &gt; 0\)</span></li>
+<li class="fragment">Nonlinear PDE limits: <span class="blue"><span
+class="math display">\[ \partial_t \eta = r \Delta(\gamma \eta) + F \eta
+. \]</span></span></li>
+<li class="fragment">Lineage motion well-understood in deterministic
+lmit, using the lookdown.</li>
+<li class="fragment"><em>Next:</em> coalescence?</li>
 </ul>
-</section>
-<section id="noodling" class="slide level2">
-<h2>noodling</h2>
-<div class="r-stack">
-<div class="fragment">
-<p><em>Will they?</em></p>
 </div>
-<div class="fragment">
-<figure>
-<img data-src="figs/flower.png" alt="Drummond’s anemone" />
-<figcaption aria-hidden="true">Drummond’s anemone</figcaption>
-</figure>
-</div>
-<div class="fragment">
-<p><span class="math display">\[\int_0^\infty e^{ix} dx\]</span></p>
-</div>
+<p><span class="blue fragment"><em>Remarks:</em></span></p>
+<div>
+<ul>
+<li class="fragment">In spite of complexity, some mathematical
+tractability</li>
+<li class="fragment">A trace of the two-step reproduction mechanisms
+persists over large temporal and spatial scales</li>
+<li class="fragment">Readily simulated in <a
+href="https://messerlab.org/SLiM">SLiM</a></li>
+<li class="fragment">Readily extended</li>
+</ul>
 </div>
 </section>
 <section id="section" class="slide level2"
