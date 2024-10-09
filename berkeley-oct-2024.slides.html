@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="./reveal.js/dist/theme/simple.css" id="theme">
   <style type="text/css">
 
-  .reveal { font-size: 20px; }
+  .reveal { font-size: 24px; }
 
   .reveal h1 { font-size: 1.5em; } 
 
@@ -275,6 +275,13 @@ alt="A kid about to blow seeds off a flower head" />
 head</figcaption>
 </figure>
 </div>
+<div class="fragment">
+<figure>
+<img data-src="figs/established_plant.jpg" style="width:90.0%"
+alt="A newly established plant" />
+<figcaption aria-hidden="true">A newly established plant</figcaption>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -309,7 +316,7 @@ step</p></li>
 class="math inline">\(\sigma\)</span></p></li>
 <li><p>local density: in circle of radius <span
 class="math inline">\(\epsilon\)</span></p></li>
-<li><p>reproduction: with <span class="math inline">\(K=2\)</span>,
+<li><p>reproduction: with <span class="math inline">\(K=1\)</span>,
 <span class="math inline">\(\lambda=3\)</span>, <span
 class="math display">\[ \gamma = \frac{\lambda}{1 + \text{(local
 density)}/K} \]</span></p></li>
@@ -360,9 +367,11 @@ href="https://github.com/petrelharp/berkeley-oct-2024/raw/main/gilia_clumping_si
 <figcaption aria-hidden="true">not patchy</figcaption>
 </figure>
 <div class="fragment">
-<p>Low dispersal distance copamred to distance over which negatively
+<p>Low dispersal distance compared to distance over which negatively
 influenced by presence of neighbors can lead to strong clumping - <span
-class="fragment">true even in deterministic model!</span></p>
+class="fragment">true even in deterministic model! <em><a
+href="https://doi.org/10.1006%2Fjtbi.1996.0370">(Sasaki
+1997)</a></em></span></p>
 </div>
 </section></section>
 <section>
@@ -374,14 +383,14 @@ class="fragment">true even in deterministic model!</span></p>
 <h2>Local density</h2>
 <p>Birth-death process with dynamics:</p>
 <ul>
-<li>A juvenile is born <span class="fragment blue"><em>per capita rate
-<span class="math inline">\(\gamma(x, \eta(x))\)</span></em></span></li>
-<li>Dispersal <span class="blue fragment"><em>distribution <span
+<li>A juvenile is born <span class="blue"><em>per capita rate <span
+class="math inline">\(\gamma(x, \eta(x))\)</span></em></span></li>
+<li>Dispersal <span class="blue"><em>distribution <span
 class="math inline">\(q(x, dy)\)</span> (Gaussian)</em></span></li>
-<li>Establishment <span class="blue fragment"><em>probability <span
+<li>Establishment <span class="blue"><em>probability <span
 class="math inline">\(r(y, \eta(y))\)</span></em></span></li>
-<li>Death of mature individuals <span class="blue fragment"><em>rate
-<span class="math inline">\(\mu(x, \eta(x))\)</span></em></span></li>
+<li>Death of mature individuals <span class="blue"><em>rate <span
+class="math inline">\(\mu(x, \eta(x))\)</span></em></span></li>
 </ul>
 <div class="fragment">
 <div class="red">
@@ -428,7 +437,7 @@ class="math inline">\({\color{red}\theta}\mu_{\color{red}\theta}(x,
 \eta(x))\)</span></li>
 </ul>
 <div class="fragment">
-<p>Assume: <span class="math display">\[ \theta\left( r(z, \eta)
+<p>Assume: <span class="math display">\[ \theta\left( r(x, \eta)
 \gamma(x, \eta) - \mu_\theta(x, \eta)\right) = F(x,\eta)\]</span></p>
 </div>
 <div class="fragment">
@@ -465,9 +474,9 @@ q_\theta(x,dz) r(z, \eta)} \qquad \color{red}{\text{increment } \langle
 f,\eta \rangle \text{ by } \frac{1}{N} f(z)}\]</span></p></li>
 <li class="fragment"><p>Individual at <span
 class="math inline">\(x\)</span> dies at rate <span
-class="math display">\[\color{blue}{\theta\mu_\theta(x,\eta)} \qquad
-\color{red}{\text{increment } \langle f,\eta \rangle \text{ by }
--\frac{1}{N} f(x)}\]</span></p></li>
+class="math inline">\(\qquad \color{blue}{\theta\mu_\theta(x,\eta)}
+\qquad \color{red}{\text{increment } \langle f,\eta \rangle \text{ by }
+-\frac{1}{N} f(x)}\)</span></p></li>
 </ul>
 </div>
 <div class="fragment">
@@ -498,14 +507,15 @@ q_\theta(x, dz) \gamma(x, \eta) \color{red}{N} \eta(dx)
 <p><span class="math display">\[\begin{aligned}
 &amp;= \int \left( \int \theta(f(z) r(z, \eta) - f(x) r(x, \eta))
 q_\theta(x,dz)\right) \gamma(x, \eta) \eta(dx) \\
-&amp;\qquad \qquad {}+ \int \int f(x) \theta \left(r(x,\eta)\gamma(x,
-\eta) - \mu_\theta(x,\eta)\right) \eta(dx) .
+&amp;\qquad \qquad {}+ \int f(x) \theta \left(r(x,\eta)\gamma(x, \eta) -
+\mu_\theta(x,\eta)\right) \eta(dx) .
 \hspace{5em}
 \end{aligned}\]</span></p>
-<div class="floatright">
-<p><span class="red">using <span class="math inline">\(\int
-q_\theta(x,dz) = 1\)</span><span></p>
-</div>
+<!--
+::: floatright
+<span class="red">using $\int q_\theta(x,dz) = 1$</span>
+:::
+-->
 </div>
 </div>
 <div class="fragment">
@@ -533,10 +543,10 @@ class="math inline">\(\langle f, \eta \rangle = -\frac{1}{N}
 f(x)\)</span></span></p></li>
 </ul>
 <p><span class="math display">\[\begin{aligned}
-&amp;N \theta \big\{ \int \int \frac{1}{N^2} f^2(z) r(z,\eta)
-q_\theta(x,dz) \gamma(x,\eta) \eta(dx)
+&amp; \theta \big\{ \int \int \frac{1}{N^2} f^2(z) r(z,\eta)
+q_\theta(x,dz) \gamma(x,\eta) N \eta(dx)
 \\&amp;\qquad \qquad {} +
-\int \frac{1}{N^2} f^2(z) \mu_\theta(x,\eta) \eta(dx) \big\}
+\int \frac{1}{N^2} f^2(z) \mu_\theta(x,\eta) N \eta(dx) \big\}
 \\&amp;\qquad = \frac{\theta}{N} \int
 \left\{ \int f^2(z) r(z,\eta) q_\theta(x,dz) \gamma(x,\eta) + f^2(x)
 \mu_\theta(x,\eta) \right\} \eta(dx)
@@ -557,8 +567,8 @@ q_\theta(x,dz) \gamma(x,\eta) \eta(dx)
 \]</span></p>
 </div>
 </section>
-<section id="small-large-alpha" class="slide level2">
-<h2>small / large <span class="math inline">\(\alpha\)</span>:</h2>
+<section id="small-large-theta" class="slide level2">
+<h2>small / large <span class="math inline">\(\theta\)</span>:</h2>
 <p><img data-src="figs/fig1a.png" style="width:45.0%"
 alt="Snapshot of a simulation showing smooth distribution of indivdiuals" />
 <img data-src="figs/fig1b.png" style="width:45.0%"
@@ -616,7 +626,7 @@ r(x,\eta) \gamma(x,\eta) - \mu_\theta(x,\eta)
 class="math inline">\(\gamma\)</span>, bounded above</p></li>
 <li><p>‘approximate excess growth rate’, <span
 class="math inline">\(F\)</span>, bounded above <span class="red">but
-not necessarily below<span> (logistic growth)</p></li>
+not necessarily below</span> (logistic growth)</p></li>
 </ul>
 </div>
 <div class="fragment">
@@ -634,13 +644,15 @@ scaling limits</p>
 <li class="fragment">Fisher-KPP and Allen-Cahn equations; Bolker-Pacala
 model; spatial branching processes</li>
 </ul></li>
-<li class="fragment"><p>The two stages of reproduction can result in a
-<span class="blue">nonlinear diffusion</span> <em>even in the scaling
-limit</em>: <span class="math display">\[\partial_t \eta = r
-\Delta(\gamma \eta) + F\eta\]</span></p></li>
+<li class="fragment"><p>Separation of the two stages of reproduction is
+still visible in the scaling limit: <span
+class="math display">\[\partial_t \eta = r \Delta(\gamma \eta) +
+F\eta\]</span></p></li>
 <li class="fragment"><p>Using a <span class="blue">lookdown
 construction</span>, we retain information about genealogies in the
-scaling limit, and hence information about population history.</p></li>
+scaling limit, and hence information about population history. <span
+class="blue"><em>(Kurtz &amp; Rodrigues 2011, Etheridge &amp; Kurtz
+2019)</em></span></p></li>
 </ul>
 </div>
 </section></section>
@@ -715,25 +727,26 @@ ds + M_1^N(t)
 \end{aligned}\]</span></p>
 </div>
 </section>
-<section id="compact-containment-of-etan_cdot_n-ge-1-1"
-class="slide level2">
-<h2>Compact containment of <span
-class="math inline">\(\{\eta^N_\cdot\}_{N \ge 1}\)</span></h2>
+<section class="slide level2">
+
 <p>Combining boundedness of <span
 class="math inline">\(\mathbb{E}[\langle 1, \eta_t^N \rangle]\)</span>
 and the calculation above, <span
-class="math inline">\(\mathbb{E}[\langle M_1^N(T)\rangle ] &lt;
+class="math inline">\(\mathbb{E}[\langle M_1^N\rangle_T ] &lt;
 C&#39;_T\)</span>, so</p>
+<div>
 <ul>
-<li>Burkholder-Davis-Gundy implies <span
+<li class="fragment"><p>Burkholder-Davis-Gundy implies <span
 class="math inline">\(\mathbb{E}[\sup_{0 \le t \le T} M_1^N(t)] &lt;
-C{&#39;&#39;}_T\)</span></li>
-<li>from which <span class="math inline">\(\mathbb{E}[\sup_{0\le t \le
-T} \langle 1, \eta_t^N \rangle ] &lt;
-C{&#39;&#39;&#39;}_T\)</span>.</li>
-<li>Markov’s inequality then leads to compact containment of <span
-class="math inline">\(\{\eta^N_\cdot\}_{N \ge 1}\)</span>.</li>
+C^{&#39;&#39;}_T\)</span></p></li>
+<li class="fragment"><p>from which <span
+class="math inline">\(\mathbb{E}[\sup_{0\le t \le T} \langle 1, \eta_t^N
+\rangle ] &lt; C^{&#39;&#39;&#39;}_T\)</span>.</p></li>
+<li class="fragment"><p>Markov’s inequality then leads to compact
+containment of <span class="math inline">\(\{\eta^N_\cdot\}_{N \ge
+1}\)</span>.</p></li>
 </ul>
+</div>
 </section></section>
 <section>
 <section id="ancestral-lineages" class="title-slide slide level1">
@@ -750,8 +763,13 @@ class="math display">\[\partial_t \eta = r \Delta(\gamma \eta) + F\eta
 </section>
 <section class="slide level2">
 
-<p><video data-src="sims/pme_expansion.lineages.mp4" controls=""><a
-href="sims/pme_expansion.lineages.mp4">Video</a></video></p>
+<p><video data-src="sims/expansion.pop.mp4" controls=""><a
+href="sims/expansion.pop.mp4">Video</a></video></p>
+</section>
+<section class="slide level2">
+
+<p><video data-src="sims/expansion.lineages.mp4" controls=""><a
+href="sims/expansion.lineages.mp4">Video</a></video></p>
 </section>
 <section id="ancestral-lineages-1" class="slide level2">
 <h2>Ancestral lineages</h2>
@@ -797,8 +815,8 @@ class="title-slide slide level1">
 class="math inline">\(d=1\)</span>)</h1>
 
 </section>
-<section id="fisher-kpp" class="slide level2">
-<h2>Fisher-KPP</h2>
+<section id="fisher-kpp-1937" class="slide level2">
+<h2>Fisher-KPP (1937)</h2>
 <p><span class="math display">\[ \frac{\partial u}{\partial t} =
 \frac{\partial^2 u}{\partial x^2} + u (1-u) \]</span></p>
 <p><span class="math inline">\(\gamma \equiv 1\)</span>, <span
@@ -807,21 +825,16 @@ class="math inline">\(F(x,m) = 1 - m\)</span>.</p>
 <div class="fragment">
 <p>Traveling wave solution <span class="math inline">\(u(t,x) = w(x -
 2t)\)</span>, so lineage moves <span class="red">relative to the wave
-front<span> as <span class="math display">\[\begin{aligned}
+front</span> as <span class="math display">\[\begin{aligned}
 dL_t
 &amp;= 2 \nabla \log(w)(L_t) dt + 2 dt + dB_t
 \end{aligned}\]</span></p>
 </div>
 <div class="fragment">
 <p><span class="math inline">\(w(x) \sim e^{-x}\)</span>, so lineages
-<span class="blue">stay in the wave front<span> (where numbers are small
-and the scaling limit breaks down)</p>
+<span class="blue">stay in the wave front</span> (where numbers are
+small and the scaling limit breaks down)</p>
 </div>
-</section>
-<section class="slide level2">
-
-<p><video data-src="sims/expansion.lineages.mp4" controls=""><a
-href="sims/expansion.lineages.mp4">Video</a></video></p>
 </section>
 <section id="allen-cahn" class="slide level2">
 <h2>Allen-Cahn</h2>
@@ -834,7 +847,7 @@ bistable.</p>
 <p>Traveling wave solution <span class="math inline">\(\varphi(t,x) =
 w(x - st)\)</span> with <span class="math inline">\(w(x) = (1 +
 e^x)^{-1}\)</span>, so lineage moves <span class="red">relative to the
-wave front<span> as <span class="math display">\[\begin{aligned}
+wave front</span> as <span class="math display">\[\begin{aligned}
 dL_t
 &amp;= \left(s - 2 \frac{e^{L_t}}{1 + e^{L_t}}\right) dt + dB_t ,
 \end{aligned}\]</span></p>
@@ -845,15 +858,18 @@ e^{sx}(1 + e^x)^{-2}\)</span>.</p>
 </div>
 <div class="fragment">
 <p>Genealogies known to be Kingman for <span
-class="math inline">\(s&lt;1\)</span>: Etheridge-Penington 2022</p>
+class="math inline">\(s&lt;1\)</span>: <a
+href="https://projecteuclid.org/journals/electronic-journal-of-probability/volume-27/issue-none/Genealogies-in-bistable-waves/10.1214/22-EJP845.full">Etheridge-Penington
+2022</a></p>
 </div>
 </section>
 <section
-id="a-less-classical-example-gamma-propto-pop-density-logistic-control"
+id="a-less-classical-example-hspace5em-gamma-propto-pop-density-logistic-control"
 class="slide level2">
-<h2>A less classical example <span class="blue"><span
+<h2>A less classical example <span
+class="math inline">\(\hspace{5em}\)</span> <span class="blue"><span
 class="math inline">\(\gamma \propto\)</span> pop density, logistic
-control<span></h2>
+control</span></h2>
 <div class="r-stack">
 <div class="fragment coverup">
 <p><span class="math display">\[ \frac{\partial u}{\partial t} =
@@ -896,6 +912,11 @@ class="math inline">\(x &lt; 0\)</span></li>
 </div>
 </div>
 </div>
+</section>
+<section class="slide level2">
+
+<p><video data-src="sims/pme_expansion.lineages.mp4" controls=""><a
+href="sims/pme_expansion.lineages.mp4">Video</a></video></p>
 </section></section>
 <section>
 <section id="closing" class="title-slide slide level1">
@@ -921,7 +942,6 @@ tractability</li>
 persists over large temporal and spatial scales</li>
 <li class="fragment">Readily simulated in <a
 href="https://messerlab.org/SLiM">SLiM</a></li>
-<li class="fragment">Readily extended</li>
 </ul>
 </div>
 </section>

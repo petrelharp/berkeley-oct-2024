@@ -144,6 +144,11 @@ Can choose functional forms to achieve stability.
 ![A kid about to blow seeds off a flower head](figs/dispersal.png)
 :::::
 
+::::: fragment
+![A newly established plant](figs/established_plant.jpg){width=90%}
+:::::
+
+
 :::
 
 ::::
@@ -179,7 +184,7 @@ Can choose functional forms to achieve stability.
 
 - local density: in circle of radius $\epsilon$
 
-- reproduction: with $K=2$, $\lambda=3$,
+- reproduction: with $K=1$, $\lambda=3$,
 $$ \gamma = \frac{\lambda}{1 + \text{(local density)}/K} $$
 
 - non-spatial 'equilibrium density':
@@ -219,8 +224,9 @@ $$ K \left( \frac{\lambda}{1 - r} - 1 \right) .$$
 
 . . .
 
-Low dispersal distance copamred to distance over which negatively influenced by presence of neighbors
-can lead to strong clumping - <span class="fragment">true even in deterministic model!</span>
+Low dispersal distance compared to distance over which negatively influenced by presence of neighbors
+can lead to strong clumping - <span class="fragment">true even in deterministic model! 
+*[(Sasaki 1997)](https://doi.org/10.1006%2Fjtbi.1996.0370)*</span>
 
 
 # Characterising the model
@@ -229,10 +235,10 @@ can lead to strong clumping - <span class="fragment">true even in deterministic 
 
 Birth-death process with dynamics:
 
-- A juvenile is born <span class="fragment blue">*per capita rate $\gamma(x, \eta(x))$*</span>
-- Dispersal <span class="blue fragment">*distribution $q(x, dy)$ (Gaussian)*</span>
-- Establishment <span class="blue fragment">*probability $r(y, \eta(y))$*</span>
-- Death of mature individuals <span class="blue fragment">*rate $\mu(x, \eta(x))$*</span>
+- A juvenile is born <span class="blue">*per capita rate $\gamma(x, \eta(x))$*</span>
+- Dispersal <span class="blue">*distribution $q(x, dy)$ (Gaussian)*</span>
+- Establishment <span class="blue">*probability $r(y, \eta(y))$*</span>
+- Death of mature individuals <span class="blue">*rate $\mu(x, \eta(x))$*</span>
 
 . . .
 
@@ -268,7 +274,7 @@ Birth-death process with dynamics:
 . . .
 
 Assume: 
-$$ \theta\left( r(z, \eta) \gamma(x, \eta) - \mu_\theta(x, \eta)\right) = F(x,\eta)$$
+$$ \theta\left( r(x, \eta) \gamma(x, \eta) - \mu_\theta(x, \eta)\right) = F(x,\eta)$$
 
 . . . 
 
@@ -294,7 +300,7 @@ inhomogeneous diffusion instead of $\Delta$.
 $$ \color{blue}{\theta \gamma(x, \eta) q_\theta(x,dz) r(z, \eta)} \qquad \color{red}{\text{increment } \langle f,\eta \rangle \text{ by } \frac{1}{N} f(z)}$$
 
 - Individual at $x$ dies at rate 
-$$\color{blue}{\theta\mu_\theta(x,\eta)} \qquad \color{red}{\text{increment } \langle f,\eta \rangle \text{ by } -\frac{1}{N} f(x)}$$
+$\qquad \color{blue}{\theta\mu_\theta(x,\eta)} \qquad \color{red}{\text{increment } \langle f,\eta \rangle \text{ by } -\frac{1}{N} f(x)}$
 :::
 
 . . .
@@ -327,13 +333,15 @@ $$\begin{aligned}
 :::: {.fragment .coverup}
 $$\begin{aligned}
  &= \int \left( \int \theta(f(z) r(z, \eta) - f(x) r(x, \eta)) q_\theta(x,dz)\right) \gamma(x, \eta) \eta(dx) \\
- &\qquad \qquad {}+ \int \int f(x) \theta \left(r(x,\eta)\gamma(x, \eta) - \mu_\theta(x,\eta)\right) \eta(dx) .
+ &\qquad \qquad {}+ \int f(x) \theta \left(r(x,\eta)\gamma(x, \eta) - \mu_\theta(x,\eta)\right) \eta(dx) .
 \hspace{5em}
 \end{aligned}$$
 
+<!--
 ::: floatright
-<span class="red">using $\int q_\theta(x,dz) = 1$<span>
+<span class="red">using $\int q_\theta(x,dz) = 1$</span>
 :::
+-->
 ::::
 
 :::
@@ -357,9 +365,9 @@ $$
     <span class="red">increment $\langle f, \eta \rangle = -\frac{1}{N} f(x)$</span>
 
 $$\begin{aligned}
-&N \theta \big\{ \int \int \frac{1}{N^2} f^2(z) r(z,\eta) q_\theta(x,dz) \gamma(x,\eta) \eta(dx)
+& \theta \big\{ \int \int \frac{1}{N^2} f^2(z) r(z,\eta) q_\theta(x,dz) \gamma(x,\eta) N \eta(dx)
 \\&\qquad \qquad {} +
-\int \frac{1}{N^2} f^2(z) \mu_\theta(x,\eta) \eta(dx) \big\}
+\int \frac{1}{N^2} f^2(z) \mu_\theta(x,\eta) N \eta(dx) \big\}
 \\&\qquad = \frac{\theta}{N} \int
 \left\{ \int f^2(z) r(z,\eta) q_\theta(x,dz) \gamma(x,\eta) + f^2(x) \mu_\theta(x,\eta) \right\} \eta(dx)
 \end{aligned}$$
@@ -380,7 +388,7 @@ $$\hspace{10em}\color{blue}{
 $$
 :::
 
-## small / large $\alpha$:
+## small / large $\theta$:
 
 ![Snapshot of a simulation showing smooth distribution of indivdiuals](figs/fig1a.png){width=45%}
 ![Snapshot of a simulation showing patchy distribution of indivdiuals](figs/fig1b.png){width=45%}
@@ -424,7 +432,7 @@ r(x,\eta) \gamma(x,\eta) - \mu_\theta(x,\eta)
 - per capita birth rate of juveniles, $\gamma$, bounded above
 
 - 'approximate excess growth rate', $F$, bounded above
-    <span class="red">but not necessarily below<span> (logistic growth)
+    <span class="red">but not necessarily below</span> (logistic growth)
 
 . . . 
 
@@ -438,12 +446,12 @@ Instead of $\Delta$ can have any uniformly elliptic second order differential op
         Bolker-Pacala model;
         spatial branching processes
     
-- The two stages of reproduction can result in a <span class="blue">nonlinear diffusion</span>
-    *even in the scaling limit*: $$\partial_t \eta = r \Delta(\gamma \eta) + F\eta$$
+- Separation of the two stages of reproduction is still visible
+    in the scaling limit: $$\partial_t \eta = r \Delta(\gamma \eta) + F\eta$$
 
 - Using a <span class="blue">lookdown construction</span>, we retain information about genealogies
     in the scaling limit, and hence
-    information about population history.
+    information about population history. <span class="blue">*(Kurtz & Rodrigues 2011, Etheridge & Kurtz 2019)*</span>
 
 :::
 
@@ -509,15 +517,17 @@ $$\begin{aligned}
 
 :::
 
-## Compact containment of $\{\eta^N_\cdot\}_{N \ge 1}$
+-------------
 
 Combining boundedness of $\mathbb{E}[\langle 1, \eta_t^N \rangle]$ and the calculation above,
-$\mathbb{E}[\langle M_1^N(T)\rangle ] < C'_T$, so
+$\mathbb{E}[\langle M_1^N\rangle_T ] < C'_T$, so
 
 ::: incremental
 
-- Burkholder-Davis-Gundy implies $\mathbb{E}[\sup_{0 \le t \le T} M_1^N(t)] < C{''}_T$
-- from which $\mathbb{E}[\sup_{0\le t \le T} \langle 1, \eta_t^N \rangle ] < C{'''}_T$.
+- Burkholder-Davis-Gundy implies $\mathbb{E}[\sup_{0 \le t \le T} M_1^N(t)] < C^{''}_T$
+
+- from which $\mathbb{E}[\sup_{0\le t \le T} \langle 1, \eta_t^N \rangle ] < C^{'''}_T$.
+
 - Markov's inequality then leads to compact containment of $\{\eta^N_\cdot\}_{N \ge 1}$.
 
 :::
@@ -536,7 +546,11 @@ $$\partial_t \eta = r \Delta(\gamma \eta) + F\eta .$$
 
 ---------
 
-![](sims/pme_expansion.lineages.mp4)
+![](sims/expansion.pop.mp4)
+
+---------
+
+![](sims/expansion.lineages.mp4)
 
 ## Ancestral lineages
 
@@ -568,7 +582,7 @@ multiply $r$ and $\mu$ by $\lambda$:
 
 # Reaction-diffusion equations and range expansion ($d=1$)
 
-## Fisher-KPP
+## Fisher-KPP (1937)
 
 $$ \frac{\partial u}{\partial t} = \frac{\partial^2 u}{\partial x^2} + u (1-u) $$
 
@@ -577,7 +591,7 @@ $\gamma \equiv 1$, $r \equiv 1$, $F(x,m) = 1 - m$.
 . . .
 
 Traveling wave solution $u(t,x) = w(x - 2t)$,
-so lineage moves <span class="red">relative to the wave front<span> as
+so lineage moves <span class="red">relative to the wave front</span> as
 $$\begin{aligned}
 dL_t 
 &= 2 \nabla \log(w)(L_t) dt + 2 dt + dB_t
@@ -585,12 +599,8 @@ dL_t
 
 . . .
 
-$w(x) \sim e^{-x}$, so lineages <span class="blue">stay in the wave front<span>
+$w(x) \sim e^{-x}$, so lineages <span class="blue">stay in the wave front</span>
 (where numbers are small and the scaling limit breaks down)
-
----------
-
-![](sims/expansion.lineages.mp4)
 
 
 ## Allen-Cahn
@@ -604,7 +614,7 @@ Now $F(x,m) = (1 - m)(2m-1+s)$, bistable.
 
 Traveling wave solution $\varphi(t,x) = w(x - st)$
 with $w(x) = (1 + e^x)^{-1}$,
-so lineage moves <span class="red">relative to the wave front<span> as
+so lineage moves <span class="red">relative to the wave front</span> as
 $$\begin{aligned}
 dL_t 
 &= \left(s - 2 \frac{e^{L_t}}{1 + e^{L_t}}\right) dt + dB_t ,
@@ -616,10 +626,10 @@ with stationary distribution $\propto e^{sx}(1 + e^x)^{-2}$.
 
 . . .
 
-Genealogies known to be Kingman for $s<1$: Etheridge-Penington 2022
+Genealogies known to be Kingman for $s<1$: [Etheridge-Penington 2022](https://projecteuclid.org/journals/electronic-journal-of-probability/volume-27/issue-none/Genealogies-in-bistable-waves/10.1214/22-EJP845.full)
 
 
-## A less classical example <span class="blue">$\gamma \propto$ pop density, logistic control<span>
+## A less classical example $\hspace{5em}$ <span class="blue">$\gamma \propto$ pop density, logistic control</span>
 
 :::: r-stack
 
@@ -662,6 +672,10 @@ $\propto e^x (1 - e^{x/2})$ for $x < 0$
 ::::::
 :::
 
+---------
+
+![](sims/pme_expansion.lineages.mp4)
+
 # Closing
 
 
@@ -679,7 +693,6 @@ $\propto e^x (1 - e^{x/2})$ for $x < 0$
 - In spite of complexity, some mathematical tractability
 - A trace of the two-step reproduction mechanisms persists over large temporal and spatial scales
 - Readily simulated in [SLiM](https://messerlab.org/SLiM)
-- Readily extended
 :::
 
 
