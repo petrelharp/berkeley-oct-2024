@@ -447,6 +447,81 @@ Instead of $\Delta$ can have any uniformly elliptic second order differential op
 
 :::
 
+# Something about the proof
+
+## Compact containment of $\{\eta^N_\cdot\}_{N \ge 1}$
+
+$$\begin{aligned}
+&\langle 1, \eta_t^N(dx)\rangle 
+= \langle 1, \eta_0^N(dx)\rangle 
+\\ &\qquad {}
++ \int_0^t \big\langle \gamma(x,\eta_s)
+    \left(\theta \int \left( r(z, \eta_s) - r(x,\eta_s)\right) q_\theta(x,dz) \right)
+\\ &\qquad \qquad {}
++ F(x,\eta_s), \eta_s(dx) \big\rangle ds + M_1^N(t)
+\\ &\qquad \qquad \qquad 
+\le \langle 1, \eta_0^N\rangle + C \int_0^t \langle 1, \eta_s^N \rangle ds + M_1^N(t) .
+\end{aligned}$$
+
+. . .
+
+Grönwall's inequality implies for all $t \in [0,T]$,
+$$ \mathbb{E}[\langle 1, \eta_t^N\rangle] \le C_T \mathbb{E}[\langle 1, \eta_0^N\rangle] .$$
+
+. . .
+
+For compact containment, we'd like to bound $\mathbb{E}[\sup_{0\le t\le T}\langle 1, \eta_t^N\rangle]$.
+
+. . .
+
+Taking suprema above, need to control $\sup_{0\le t\le T}M_1^N(t)$.
+
+## A useful trick
+
+$$\begin{aligned}
+\langle M_1^N \rangle_t 
+&= \frac{\theta}{N} \int_0^t \big\langle \gamma(x,\eta_s) \int r(y,\eta_s) q_\theta(x,dy)
+\\ &\qquad {}
++ \left(r(x,\eta_s) \gamma(x,\eta_s) - \frac{1}{\theta}F(x,\eta_s)\right),
+\eta_s(x) \big\rangle ds
+\end{aligned}$$
+
+::: {.fragment .red}
+
+Problem: $F$ not bounded below.
+
+:::
+
+::: {.fragment .blue}
+
+Solution: Rearrange equation for $\langle 1, \eta_t^N \rangle$
+$$\begin{aligned}
+&- \int_0^t \langle F(x,\eta_s), \eta_s(dx)\rangle ds 
+= \langle 1, \eta_0^N(dx)\rangle - \langle 1, \eta_t^N(dx) \rangle
+\\ &\qquad {}
++ \int_0^t \big\langle \gamma(x,\eta_s)
+\left( \theta \int (r(z,\eta_s) - r(x,\eta_s)) q_\theta(x,dz) \right),
+\eta_s(dx) \big\rangle ds
++ M_1^N(t)
+\\ &\qquad\qquad 
+\le \langle 1, \eta_0^N \rangle + C \int_0^t \langle 1, \eta_s^N \rangle ds + M_1^N(t)
+\end{aligned}$$
+
+:::
+
+## Compact containment of $\{\eta^N_\cdot\}_{N \ge 1}$
+
+Combining boundedness of $\mathbb{E}[\langle 1, \eta_t^N \rangle]$ and the calculation above,
+$\mathbb{E}[\langle M_1^N(T)\rangle ] < C'_T$, so
+
+::: incremental
+
+- Burkholder-Davis-Gundy implies $\mathbb{E}[\sup_{0 \le t \le T} M_1^N(t)] < C{''}_T$
+- from which $\mathbb{E}[\sup_{0\le t \le T} \langle 1, \eta_t^N \rangle ] < C{'''}_T$.
+- Markov's inequality then leads to compact containment of $\{\eta^N_\cdot\}_{N \ge 1}$.
+
+:::
+
 # Ancestral lineages
 
 ::: blue

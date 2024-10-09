@@ -645,6 +645,97 @@ scaling limit, and hence information about population history.</p></li>
 </div>
 </section></section>
 <section>
+<section id="something-about-the-proof"
+class="title-slide slide level1">
+<h1>Something about the proof</h1>
+
+</section>
+<section id="compact-containment-of-etan_cdot_n-ge-1"
+class="slide level2">
+<h2>Compact containment of <span
+class="math inline">\(\{\eta^N_\cdot\}_{N \ge 1}\)</span></h2>
+<p><span class="math display">\[\begin{aligned}
+&amp;\langle 1, \eta_t^N(dx)\rangle
+= \langle 1, \eta_0^N(dx)\rangle
+\\ &amp;\qquad {}
++ \int_0^t \big\langle \gamma(x,\eta_s)
+    \left(\theta \int \left( r(z, \eta_s) - r(x,\eta_s)\right)
+q_\theta(x,dz) \right)
+\\ &amp;\qquad \qquad {}
++ F(x,\eta_s), \eta_s(dx) \big\rangle ds + M_1^N(t)
+\\ &amp;\qquad \qquad \qquad
+\le \langle 1, \eta_0^N\rangle + C \int_0^t \langle 1, \eta_s^N \rangle
+ds + M_1^N(t) .
+\end{aligned}\]</span></p>
+<div class="fragment">
+<p>Grönwall’s inequality implies for all <span class="math inline">\(t
+\in [0,T]\)</span>, <span class="math display">\[ \mathbb{E}[\langle 1,
+\eta_t^N\rangle] \le C_T \mathbb{E}[\langle 1, \eta_0^N\rangle]
+.\]</span></p>
+</div>
+<div class="fragment">
+<p>For compact containment, we’d like to bound <span
+class="math inline">\(\mathbb{E}[\sup_{0\le t\le T}\langle 1,
+\eta_t^N\rangle]\)</span>.</p>
+</div>
+<div class="fragment">
+<p>Taking suprema above, need to control <span
+class="math inline">\(\sup_{0\le t\le T}M_1^N(t)\)</span>.</p>
+</div>
+</section>
+<section id="a-useful-trick" class="slide level2">
+<h2>A useful trick</h2>
+<p><span class="math display">\[\begin{aligned}
+\langle M_1^N \rangle_t
+&amp;= \frac{\theta}{N} \int_0^t \big\langle \gamma(x,\eta_s) \int
+r(y,\eta_s) q_\theta(x,dy)
+\\ &amp;\qquad {}
++ \left(r(x,\eta_s) \gamma(x,\eta_s) -
+\frac{1}{\theta}F(x,\eta_s)\right),
+\eta_s(x) \big\rangle ds
+\end{aligned}\]</span></p>
+<div class="fragment red">
+<p>Problem: <span class="math inline">\(F\)</span> not bounded
+below.</p>
+</div>
+<div class="fragment blue">
+<p>Solution: Rearrange equation for <span class="math inline">\(\langle
+1, \eta_t^N \rangle\)</span> <span
+class="math display">\[\begin{aligned}
+&amp;- \int_0^t \langle F(x,\eta_s), \eta_s(dx)\rangle ds
+= \langle 1, \eta_0^N(dx)\rangle - \langle 1, \eta_t^N(dx) \rangle
+\\ &amp;\qquad {}
++ \int_0^t \big\langle \gamma(x,\eta_s)
+\left( \theta \int (r(z,\eta_s) - r(x,\eta_s)) q_\theta(x,dz) \right),
+\eta_s(dx) \big\rangle ds
++ M_1^N(t)
+\\ &amp;\qquad\qquad
+\le \langle 1, \eta_0^N \rangle + C \int_0^t \langle 1, \eta_s^N \rangle
+ds + M_1^N(t)
+\end{aligned}\]</span></p>
+</div>
+</section>
+<section id="compact-containment-of-etan_cdot_n-ge-1-1"
+class="slide level2">
+<h2>Compact containment of <span
+class="math inline">\(\{\eta^N_\cdot\}_{N \ge 1}\)</span></h2>
+<p>Combining boundedness of <span
+class="math inline">\(\mathbb{E}[\langle 1, \eta_t^N \rangle]\)</span>
+and the calculation above, <span
+class="math inline">\(\mathbb{E}[\langle M_1^N(T)\rangle ] &lt;
+C&#39;_T\)</span>, so</p>
+<ul>
+<li>Burkholder-Davis-Gundy implies <span
+class="math inline">\(\mathbb{E}[\sup_{0 \le t \le T} M_1^N(t)] &lt;
+C{&#39;&#39;}_T\)</span></li>
+<li>from which <span class="math inline">\(\mathbb{E}[\sup_{0\le t \le
+T} \langle 1, \eta_t^N \rangle ] &lt;
+C{&#39;&#39;&#39;}_T\)</span>.</li>
+<li>Markov’s inequality then leads to compact containment of <span
+class="math inline">\(\{\eta^N_\cdot\}_{N \ge 1}\)</span>.</li>
+</ul>
+</section></section>
+<section>
 <section id="ancestral-lineages" class="title-slide slide level1">
 <h1>Ancestral lineages</h1>
 <div class="blue">
@@ -817,11 +908,11 @@ class="math inline">\(\lim \frac{\theta}{N} &gt; 0\)</span></li>
 class="math display">\[ \partial_t \eta = r \Delta(\gamma \eta) + F \eta
 . \]</span></span></li>
 <li class="fragment">Lineage motion well-understood in deterministic
-lmit, using the lookdown.</li>
+limit, using a lookdown.</li>
 <li class="fragment"><em>Next:</em> coalescence?</li>
 </ul>
 </div>
-<p><span class="blue fragment"><em>Remarks:</em></span></p>
+<p><span class="red fragment"><em>Remarks:</em></span></p>
 <div>
 <ul>
 <li class="fragment">In spite of complexity, some mathematical
