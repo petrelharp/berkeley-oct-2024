@@ -1,6 +1,6 @@
 ---
 title: "Forwards and backwards in spatially heterogeneous populations"
-author: "Peter Ralph"
+author: "Peter Ralph <br/> University of Oregon <br/> Dept of Data Science"
 date: "Probability Seminar <br/> UC Berkeley // 9 October 2024"
 ---
 
